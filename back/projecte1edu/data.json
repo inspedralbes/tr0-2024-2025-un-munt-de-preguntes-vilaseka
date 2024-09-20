@@ -1,0 +1,148 @@
+{
+  "preguntes": [
+    {
+      "id": 1,
+      "pregunta": "Quina marca de cotxes utilitza el lema 'Ultimate Driving Machine'?",
+      "respostes": [
+        "BMW",
+        "Mercedes-Benz",
+        "Audi",
+        "Lexus"
+      ],
+      "resposta_correcta": 0,
+      "imatge": "https://exemple.com/bmw.jpg"
+    },
+    {
+      "id": 2,
+      "pregunta": "Quina marca utilitza el lema 'Just Do It'?",
+      "respostes": [
+        "Nike",
+        "Adidas",
+        "Puma",
+        "Reebok"
+      ],
+      "resposta_correcta": 0,
+      "imatge": "https://exemple.com/nike.jpg"
+    },
+    {
+      "id": 3,
+      "pregunta": "Quina marca és coneguda pel seu logotip amb una serp que engoleix la seva pròpia cua?",
+      "respostes": [
+        "Mercedes-Benz",
+        "Ferrari",
+        "Alfa Romeo",
+        "Lamborghini"
+      ],
+      "resposta_correcta": 2,
+      "imatge": "https://exemple.com/alfa_romeo.jpg"
+    },
+    {
+      "id": 4,
+      "pregunta": "Quina marca de tecnologia utilitza un logotip amb una poma mossegada?",
+      "respostes": [
+        "Apple",
+        "Samsung",
+        "Sony",
+        "Microsoft"
+      ],
+      "resposta_correcta": 0,
+      "imatge": "https://exemple.com/apple.jpg"
+    },
+    {
+      "id": 5,
+      "pregunta": "Quina marca de cotxes és coneguda pel seu logotip amb un cavall rampant?",
+      "respostes": [
+        "Ferrari",
+        "Porsche",
+        "Maserati",
+        "Lamborghini"
+      ],
+      "resposta_correcta": 0,
+      "imatge": "https://exemple.com/ferrari.jpg"
+    },
+    {
+      "id": 6,
+      "pregunta": "Quina marca de luxe utilitza un logotip amb un doble C entrellaçat?",
+      "respostes": [
+        "Chanel",
+        "Louis Vuitton",
+        "Gucci",
+        "Prada"
+      ],
+      "resposta_correcta": 0,
+      "imatge": "https://exemple.com/chanel.jpg"
+    },
+    {
+      "id": 7,
+      "pregunta": "Quina marca utilitza un logotip amb una fletxa que apunta cap a la dreta?",
+      "respostes": [
+        "Amazon",
+        "eBay",
+        "Alibaba",
+        "Walmart"
+      ],
+      "resposta_correcta": 0,
+      "imatge": "https://exemple.com/amazon.jpg"
+    },
+    {
+      "id": 8,
+      "pregunta": "Quina marca de cotxes és coneguda pel seu logotip amb una estrella de tres puntes?",
+      "respostes": [
+        "Mercedes-Benz",
+        "Audi",
+        "BMW",
+        "Volkswagen"
+      ],
+      "resposta_correcta": 0,
+      "imatge": "https://exemple.com/mercedes_benz.jpg"
+    },
+    {
+      "id": 9,
+      "pregunta": "Quina marca de begudes utilitza un logotip amb una ona?",
+      "respostes": [
+        "Coca-Cola",
+        "Pepsi",
+        "Sprite",
+        "Fanta"
+      ],
+      "resposta_correcta": 1,
+      "imatge": "https://exemple.com/pepsi.jpg"
+    },
+    {
+      "id": 10,
+      "pregunta": "Quina marca d'ordinadors portàtils utilitza un logotip amb una campana?",
+      "respostes": [
+        "Dell",
+        "HP",
+        "Lenovo",
+        "Acer"
+      ],
+      "resposta_correcta": 1,
+      "imatge": "https://exemple.com/hp.jpg"
+    },
+    {
+      "id": 11,
+      "pregunta": "Quina marca d'automòbils utilitza un logotip amb un oval?",
+      "respostes": [
+        "Ford",
+        "Chevrolet",
+        "Toyota",
+        "Honda"
+      ],
+      "resposta_correcta": 0,
+      "imatge": "https://exemple.com/ford.jpg"
+    },
+    {
+      "id": 12,
+      "pregunta": "Quina marca utilitza un logotip amb una creu blanca sobre un fons vermell?",
+      "respostes": [
+        "Swiss Air",
+        "Red Cross",
+        "Coca-Cola",
+        "Puma"
+      ],
+      "resposta_correcta": 1,
+      "imatge": "https://exemple.com/red_cross.jpg"
+    }    
+  ]
+}
