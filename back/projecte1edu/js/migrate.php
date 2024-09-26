@@ -14,6 +14,33 @@ if ($conn->connect_error) {
 }
 echo "Connected successfully";
 
+
+$sqlDrop = "DROP TABLE IF EXISTS preguntes_existents;";
+
+if ($conn->query($sqlDrop) === TRUE) {
+    echo "Taula elimanada si existia.<br>";
+} else {
+    echo "Error al elimminar la taula: " . $conn->error . "</br>";
+}
+
+$sqlCreate = " CREATE TABLE `preguntes_existents` (
+    `id` int(11) NOT NULL,
+    `pregunta` varchar(100) NOT NULL,
+    `r1` varchar(30) NOT NULL,
+    `r2` varchar(30) NOT NULL,
+    `r3` varchar(30) NOT NULL,
+    `r4` varchar(30) NOT NULL,
+    `rcorrecte` int(11) NOT NULL
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  COMMIT;
+  ";
+
+if ($conn->query($sqlCreate) === TRUE) {
+    echo "Taula creada correctament. <br>";
+} else {
+    echo "Error al crear la taula " . $conn->error . "</br>";
+}
+
 //llegim el fitxer json
 $json = file_get_contents('js/data.json');
 $json = json_decode($json, true);

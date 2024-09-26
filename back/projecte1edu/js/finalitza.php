@@ -1,5 +1,6 @@
 <?php
 // obtenim les dades enviades
+
 $input = file_get_contents('php://input');
 $usuariRespostes = json_decode($input, true);
 

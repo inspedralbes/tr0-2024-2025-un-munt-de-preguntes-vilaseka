@@ -6,9 +6,7 @@ fetch('js/getPreguntes.php?num=10')
     data = dades;
     console.log(data);
     mostrarPregunta();
-    actualitzarMarcador();
   });
-
 
 let iniciTemps = null; // variable per guardar l'hora d'inici des del primer clic
 let opcions = ['A', 'B', 'C', 'D']; // opcions per a les respostes
@@ -46,9 +44,7 @@ function actualitzarMarcador() {
     }
     htmlString += `</td></tr>`;
   }
-
   htmlString += `</table>`;
-
   document.getElementById("marcador").innerHTML = htmlString;
 }
 
@@ -59,12 +55,10 @@ function mostrarPregunta() {
   if (preguntaIndex < estatDeLaPartida.preguntes.length) {
     let htmlString = ''; // variable per construir el HTML
     htmlString += `<h2>${data[0][estatDeLaPartida.contadorPreguntes].pregunta}</h2>`; // afegir la pregunta
-
     // iterem sobre les respostes
     for (let j = 0; j < data[0][preguntaIndex].respostes.length; j++) {
       htmlString += `<button onclick="gestionarResposta(${j})">${opcions[j]}</button> ${data[0][preguntaIndex].respostes[j]}<br>`;
     }
-
     partidaDiv.innerHTML = htmlString; // injectar el HTML
     partidaDiv.innerHTML += `<p>Puntuació actual: ${puntuacio}/10</p>`; // mostrar la puntuació
   } else {
