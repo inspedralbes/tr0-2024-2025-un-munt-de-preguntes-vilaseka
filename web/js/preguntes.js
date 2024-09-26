@@ -1,6 +1,6 @@
 let data;
 
-fetch('js/getPreguntes.php?num=10')
+fetch('back/getPreguntes.php?num=10')
   .then(response => response.json())
   .then(dades => {
     data = dades;

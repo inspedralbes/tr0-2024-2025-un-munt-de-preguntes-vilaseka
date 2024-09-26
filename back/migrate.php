@@ -14,15 +14,17 @@ if ($conn->connect_error) {
 }
 echo "Connected successfully";
 
-
+//aqui elimino la taula si existeix
 $sqlDrop = "DROP TABLE IF EXISTS preguntes_existents;";
 
+//missatge de error
 if ($conn->query($sqlDrop) === TRUE) {
     echo "Taula elimanada si existia.<br>";
 } else {
     echo "Error al elimminar la taula: " . $conn->error . "</br>";
 }
 
+//creacio de taula
 $sqlCreate = " CREATE TABLE `preguntes_existents` (
     `id` int(11) NOT NULL,
     `pregunta` varchar(100) NOT NULL,
@@ -35,6 +37,7 @@ $sqlCreate = " CREATE TABLE `preguntes_existents` (
   COMMIT;
   ";
 
+//missatge de error
 if ($conn->query($sqlCreate) === TRUE) {
     echo "Taula creada correctament. <br>";
 } else {
@@ -42,7 +45,7 @@ if ($conn->query($sqlCreate) === TRUE) {
 }
 
 //llegim el fitxer json
-$json = file_get_contents('js/data.json');
+$json = file_get_contents('back/data.json');
 $json = json_decode($json, true);
 
 //BUCLE PER INSERIR DADES
@@ -58,6 +61,5 @@ foreach ($data['preguntes'] as $row) {
     $sql = "INSERT INTO preguntes_existents ('id','pregunta','r1','r2','r3','r4','rcorrecte') VALUES ('$id','$pregunta','$r1','$r2','$r3','$r4','$rcorrecte');";
 }
 
-//tanquem la connexio
 $conn->close();
 ?>
