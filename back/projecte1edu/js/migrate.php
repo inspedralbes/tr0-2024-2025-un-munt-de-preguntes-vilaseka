@@ -1,13 +1,12 @@
-//legir json, conectarnos base de dades, fer bucle del json i per cada pregunta anar insertant.
-
 <?php
 // establim connexio amb la base de dades
 $servername = "localhost";
 $username = "edu";
 $password = "2024";
+$dbname = "UMDP";
 
 // creem la connexio
-$conn = new mysqli($servername, $username, $password);
+$conn = new mysqli($servername, $username, $password, $dbname);
 
 // Check connection (w3schools) verificaio
 if ($conn->connect_error) {
@@ -19,17 +18,19 @@ echo "Connected successfully";
 $json = file_get_contents('js/data.json');
 $json = json_decode($json, true);
 
-foreach ($data as $row) {
+//BUCLE PER INSERIR DADES
+foreach ($data['preguntes'] as $row) {
     $id = $row['id'];
     $pregunta = $row['pregunta'];
-    $r1 = $row['r1'];
-    $r2 = $row['r2'];
-    $r3 = $row['r3'];
-    $r4 = $row['r4'];
-    $rcorrecte = $row['rcorrecte'];
-    $sql = "INSERT INTO preguntes_existents ('id','pregunta','r1','r2','r3','r4','rcorrecta') VALUES ('$id','$pregunta','$r1','$r2','$r3','$r4','$rcorrecta');";
-    mysqli_query($sql);
+    $r1 = $row['respostes'][0];
+    $r2 = $row['respostes'][1];
+    $r3 = $row['respostes'][2];
+    $r4 = $row['respostes'][3];
+    $rcorrecte = $row['resposta_correcta'];
 
-    $result = $conn->query($sql);
+    $sql = "INSERT INTO preguntes_existents ('id','pregunta','r1','r2','r3','r4','rcorrecte') VALUES ('$id','$pregunta','$r1','$r2','$r3','$r4','$rcorrecte');";
 }
+
+//tanquem la connexio
+$conn->close();
 ?>

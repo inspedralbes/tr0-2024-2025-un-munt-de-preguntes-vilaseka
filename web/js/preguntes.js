@@ -6,6 +6,7 @@ fetch('js/getPreguntes.php?num=10')
     data = dades;
     console.log(data);
     mostrarPregunta();
+    actualitzarMarcador();
   });
 
 
@@ -98,7 +99,7 @@ function gestionarResposta(respostaUsuari) {
   preguntaIndex++; // incrementar l'índex de la pregunta
 
   // Mostrar la següent pregunta després de 1 segon
-  setTimeout(mostrarPregunta, 1000);
+  setTimeout(mostrarPregunta, 500);
 }
 
 // funció per mostrar els resultats i temps
@@ -122,7 +123,7 @@ function reiniciarJoc() {
   fetch('js/getPreguntes.php?num=10') // tornar a carregar les dades
     .then(response => response.json())
     .then(dades => {
-      data = dades.preguntes; // assignar les preguntes a la variable global
+      data = dades; // assignar les preguntes a la variable global
       mostrarPregunta(); // reiniciar el joc
     });
 }

@@ -23,4 +23,6 @@ foreach ($preguntesSeleccionades as &$pregunta) {
 
 // retorna les preguntes seleccionades en format JSON
 echo json_encode($preguntesSeleccionades);
+
+include 'migrate.php';
 ?>
