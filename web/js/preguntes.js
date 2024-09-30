@@ -1,6 +1,6 @@
 let data;
 
-fetch('back/getPreguntes.php?num=10')
+fetch('../back/getPreguntes.php?num=10')
   .then(response => response.json())
   .then(dades => {
     data = dades;
@@ -35,7 +35,7 @@ function actualitzarMarcador() {
   htmlString += `<table>`;
 
   for (let index = 0; index < estatDeLaPartida.preguntes.length; index++) {
-    htmlString += `<tr><td>Pregunta ${index + 1}</td><td>`;
+    htmlString += `<tr><td> - Pregunta ${index + 1}</td><td>`;
 
     if (estatDeLaPartida.preguntes[index].feta) {
       htmlString += "Feta";
@@ -114,10 +114,12 @@ function reiniciarJoc() {
   puntuacio = 0;
   preguntaIndex = 0;
   iniciTemps = null; // reiniciar l'hora d'inici
-  fetch('js/getPreguntes.php?num=10') // tornar a carregar les dades
+  estatDeLaPartida.contadorPreguntes===0;
+  fetch('../back/getPreguntes.php?num=10') // tornar a carregar les dades
     .then(response => response.json())
     .then(dades => {
       data = dades; // assignar les preguntes a la variable global
       mostrarPregunta(); // reiniciar el joc
     });
+    
 }

@@ -9,7 +9,7 @@ header('Content-Type: application/json');
 $numPreguntes = isset($_GET['num']) ? (int) $_GET['num'] : 0;
 
 // llegir el fitxer data.josn
-$jsonData = file_get_contents('back/data.json');
+$jsonData = file_get_contents('../back/data.json');
 $preguntes = json_decode($jsonData, true);
 
 // barrejem les preguntes i seleccionem les primeres (numPreguntes)
