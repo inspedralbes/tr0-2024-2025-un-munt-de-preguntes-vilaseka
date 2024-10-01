@@ -45,7 +45,7 @@ if ($conn->query($sqlCreate) === TRUE) {
 }
 
 //llegim el fitxer json
-$json = file_get_contents('back/data.json');
+$json = file_get_contents('../back/data.json');
 $json = json_decode($json, true);
 
 //BUCLE PER INSERIR DADES
@@ -58,7 +58,8 @@ foreach ($data['preguntes'] as $row) {
     $r4 = $row['respostes'][3];
     $rcorrecte = $row['resposta_correcta'];
 
-    $sql = "INSERT INTO preguntes_existents ('id','pregunta','r1','r2','r3','r4','rcorrecte') VALUES ('$id','$pregunta','$r1','$r2','$r3','$r4','$rcorrecte');";
+    $sql = "INSERT INTO preguntes_existents ('id','pregunta','r1','r2','r3','r4','rcorrecte') 
+    VALUES ('$id','$pregunta','$r1','$r2','$r3','$r4','$rcorrecte');";
 }
 
 $conn->close();

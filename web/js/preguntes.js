@@ -4,7 +4,7 @@ fetch('../back/getPreguntes.php?num=10')
   .then(response => response.json())
   .then(dades => {
     data = dades;
-    console.log(data);
+    //console.log(data);
     mostrarPregunta();
   });
 
@@ -55,12 +55,23 @@ function mostrarPregunta() {
   if (preguntaIndex < estatDeLaPartida.preguntes.length) {
     let htmlString = ''; // variable per construir el HTML
     htmlString += `<h2>${data[0][estatDeLaPartida.contadorPreguntes].pregunta}</h2>`; // afegir la pregunta
+    
     // iterem sobre les respostes
     for (let j = 0; j < data[0][preguntaIndex].respostes.length; j++) {
-      htmlString += `<button onclick="gestionarResposta(${j})">${opcions[j]}</button> ${data[0][preguntaIndex].respostes[j]}<br>`;
+      htmlString += `<button class="resposta-button" data-index="${j}">${opcions[j]}</button> ${data[0][preguntaIndex].respostes[j]}<br>`;
     }
+
     partidaDiv.innerHTML = htmlString; // injectar el HTML
     partidaDiv.innerHTML += `<p>Puntuació actual: ${puntuacio}/10</p>`; // mostrar la puntuació
+
+    //event listeners
+    const buttons = partidaDiv.querySelectorAll('.resposta-button');
+    buttons.forEach(button => {
+      button.addEventListener('click', (event) => {
+        const index = event.target.getAttribute('data-index');
+        gestionarResposta(index);
+      });
+    });
   } else {
     mostrarResultats();
   }
@@ -107,6 +118,8 @@ function mostrarResultats() {
   partidaDiv.innerHTML += `Vols tornar a jugar? <p>`;
   // botó per reiniciar
   partidaDiv.innerHTML += `<p> <button onclick="reiniciarJoc()">Sí</button>`;
+
+  document.getElementById('reiniciar-joc').addEventListener('click', reiniciarJoc);
 }
 
 // funció per reiniciar el joc
@@ -114,12 +127,17 @@ function reiniciarJoc() {
   puntuacio = 0;
   preguntaIndex = 0;
   iniciTemps = null; // reiniciar l'hora d'inici
-  estatDeLaPartida.contadorPreguntes===0;
+  estatDeLaPartida.contadorPreguntes = 0;
+
+  for (let i = 0; i < estatDeLaPartida.preguntes.length; i++) {
+    estatDeLaPartida.preguntes[i].feta = false;
+    estatDeLaPartida.preguntes[i].resposta = 0;
+  }
   fetch('../back/getPreguntes.php?num=10') // tornar a carregar les dades
     .then(response => response.json())
     .then(dades => {
       data = dades; // assignar les preguntes a la variable global
       mostrarPregunta(); // reiniciar el joc
     });
-    
+
 }
