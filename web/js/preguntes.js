@@ -64,7 +64,7 @@ function mostrarPregunta() {
 
     htmlString += `<button onclick="actualitzarPregunta(${data[preguntaIndex].id})">Modificar Pregunta</button>`;
     htmlString += `<button onclick="eliminarPregunta(${data[preguntaIndex].id})">Eliminar Pregunta</button>`;
-
+    htmlString += `<button onclick="afegirPregunta(${data[preguntaIndex].id})">Afegir Pregunta</button>`;
     
     partidaDiv.innerHTML = htmlString; // injectar el HTML
     partidaDiv.innerHTML += `<p>Puntuació actual: ${puntuacio}/10</p>`; // mostrar la puntuació
@@ -80,11 +80,6 @@ function mostrarPregunta() {
   } else {
     mostrarResultats();
   }
-}
-
-function actualitzarPregunta(id){
-  const pregunta = data[0][preguntaIndex];
-  
 }
 
 function gestionarResposta(respostaUsuari) {
@@ -150,4 +145,139 @@ function reiniciarJoc() {
       mostrarPregunta(); // reiniciar el joc
     });
 
+}
+
+
+//CRUD
+
+//actulitzarPregunta
+function actualitzarPregunta(id) {
+  const pregunta = data[preguntaIndex];
+
+  // Crear un formulari per editar la pregunta
+  let htmlString = `
+    <h3>Modificar Pregunta</h3>
+    <label>Pregunta:</label>
+    <input type="text" id="novaPregunta" value="${pregunta.pregunta}"><br>
+    <label>Respostes:</label><br>
+    ${pregunta.respostes.map((resposta, index) => `
+      <input type="text" id="novaResposta${index}" value="${resposta}">
+    `).join('<br>')}
+    <button onclick="guardarActualitzacio(${id})">Guardar Canvis</button>
+  `;
+
+  const partidaDiv = document.getElementById('partida');
+  partidaDiv.innerHTML = htmlString; // Mostrar formulari per modificar
+}
+
+function guardarActualitzacio(id) {
+  const novaPregunta = document.getElementById('novaPregunta').value;
+  const novesRespostes = [];
+  
+  for (let i = 0; i < 4; i++) {
+    novesRespostes.push(document.getElementById(`novaResposta${i}`).value);
+  }
+
+  const actualitzacioData = {
+    id: id,
+    pregunta: novaPregunta,
+    respostes: novesRespostes,
+    resposta_correcta: data[preguntaIndex].resposta_correcta // mantenir la resposta correcta
+  };
+
+  // Enviar petició per actualitzar la pregunta
+  fetch('../back/actualitzarPregunta.php', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(actualitzacioData)
+  })
+  .then(response => response.json())
+  .then(result => {
+    // Aquí pots gestionar la resposta de la teva API
+    if (result.success) {
+      alert('Pregunta actualitzada amb èxit!');
+      reiniciarJoc(); // Reiniciar el joc després d'actualitzar
+    } else {
+      alert('Error en actualitzar la pregunta: ' + result.message);
+    }
+  });
+}
+
+//eliminarPregunta
+function eliminarPregunta(id) {
+  if (confirm("Estàs segur que vols eliminar aquesta pregunta?")) {
+    fetch('../back/borrarPregunta.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ id: id })
+    })
+    .then(response => response.json())
+    .then(result => {
+      if (result.success) {
+        alert('Pregunta eliminada amb èxit!');
+        reiniciarJoc(); // Reiniciar el joc després d'eliminar
+      } else {
+        alert('Error en eliminar la pregunta: ' + result.message);
+      }
+    });
+  }
+}
+
+//afegirPregunta
+function afegirPregunta() {
+  let htmlString = `
+    <h3>Afegir Nova Pregunta</h3>
+    <label>Pregunta:</label>
+    <input type="text" id="novaPregunta" placeholder="Escriu la pregunta aquí"><br>
+    <label>Respostes:</label><br>
+    <input type="text" id="novaResposta0" placeholder="Resposta A"><br>
+    <input type="text" id="novaResposta1" placeholder="Resposta B"><br>
+    <input type="text" id="novaResposta2" placeholder="Resposta C"><br>
+    <input type="text" id="novaResposta3" placeholder="Resposta D"><br>
+    <label>Resposta Correcta (0-3):</label>
+    <input type="number" id="respostaCorrecta" min="0" max="3"><br>
+    <button onclick="guardarNovaPregunta()">Guardar Pregunta</button>
+  `;
+
+  const partidaDiv = document.getElementById('partida');
+  partidaDiv.innerHTML = htmlString; // Mostrar formulari per afegir nova pregunta
+}
+
+function guardarNovaPregunta() {
+  const novaPregunta = document.getElementById('novaPregunta').value;
+  const novesRespostes = [
+    document.getElementById('novaResposta0').value,
+    document.getElementById('novaResposta1').value,
+    document.getElementById('novaResposta2').value,
+    document.getElementById('novaResposta3').value,
+  ];
+  const respostaCorrecta = parseInt(document.getElementById('respostaCorrecta').value, 10);
+
+  const novaPreguntaData = {
+    pregunta: novaPregunta,
+    respostes: novesRespostes,
+    resposta_correcta: respostaCorrecta
+  };
+
+  // Enviar petició per afegir la nova pregunta
+  fetch('../back/afegirPregunta.php', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(novaPreguntaData)
+  })
+  .then(response => response.json())
+  .then(result => {
+    if (result.success) {
+      alert('Pregunta afegida amb èxit!');
+      reiniciarJoc(); // Reiniciar el joc després d'afegir
+    } else {
+      alert('Error en afegir la pregunta: ' + result.message);
+    }
+  });
 }
