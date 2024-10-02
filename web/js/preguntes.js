@@ -4,7 +4,7 @@ fetch('../back/getPreguntes.php?num=10')
   .then(response => response.json())
   .then(dades => {
     data = dades;
-   //console.log(data);
+    //console.log(data);
     mostrarPregunta();
   });
 
@@ -55,7 +55,7 @@ function mostrarPregunta() {
   if (preguntaIndex < estatDeLaPartida.preguntes.length) {
     let htmlString = ''; // variable per construir el HTML
     htmlString += `<h2>${data[estatDeLaPartida.contadorPreguntes].pregunta}</h2>`; // afegir la pregunta
-    
+
     // iterem sobre les respostes
     for (let j = 0; j < data[preguntaIndex].respostes.length; j++) {
       htmlString += `<button class="resposta-button" data-index="${j}">${opcions[j]}</button> ${data[preguntaIndex].respostes[j]}<br>`;
@@ -65,7 +65,7 @@ function mostrarPregunta() {
     htmlString += `<button onclick="actualitzarPregunta(${data[preguntaIndex].id})">Modificar Pregunta</button>`;
     htmlString += `<button onclick="eliminarPregunta(${data[preguntaIndex].id})">Eliminar Pregunta</button>`;
     htmlString += `<button onclick="afegirPregunta(${data[preguntaIndex].id})">Afegir Pregunta</button>`;
-    
+
     partidaDiv.innerHTML = htmlString; // injectar el HTML
     partidaDiv.innerHTML += `<p>Puntuació actual: ${puntuacio}/10</p>`; // mostrar la puntuació
 
@@ -73,7 +73,7 @@ function mostrarPregunta() {
     const buttons = partidaDiv.querySelectorAll('.resposta-button');
     buttons.forEach(button => {
       button.addEventListener('click', (event) => {
-        const index = parseInt(event.target.getAttribute('data-index'),10);
+        const index = parseInt(event.target.getAttribute('data-index'), 10);
         gestionarResposta(index);
       });
     });
@@ -88,7 +88,7 @@ function gestionarResposta(respostaUsuari) {
     iniciTemps = Date.now(); // guardem el temps en mil·lisegons
   }
 
-  const respostaCorrecta = parseInt(data[preguntaIndex].resposta_correcta,10) ; // obtenir la resposta correcta
+  const respostaCorrecta = parseInt(data[preguntaIndex].resposta_correcta, 10); // obtenir la resposta correcta
   const correcioDiv = document.getElementById('correcio'); // espai per correcció
 
   // comprovar si la resposta és correcta
@@ -146,8 +146,6 @@ function reiniciarJoc() {
     });
 
 }
-
-
 //CRUD
 
 //actulitzarPregunta
@@ -156,6 +154,7 @@ function actualitzarPregunta(id) {
 
   // Crear un formulari per editar la pregunta
   let htmlString = `
+    <button onclick="mostrarPregunta()">Inici</button>
     <h3>Modificar Pregunta</h3>
     <label>Pregunta:</label>
     <input type="text" id="novaPregunta" value="${pregunta.pregunta}"><br>
@@ -163,6 +162,7 @@ function actualitzarPregunta(id) {
     ${pregunta.respostes.map((resposta, index) => `
       <input type="text" id="novaResposta${index}" value="${resposta}">
     `).join('<br>')}
+    <br>
     <button onclick="guardarActualitzacio(${id})">Guardar Canvis</button>
   `;
 
@@ -173,7 +173,7 @@ function actualitzarPregunta(id) {
 function guardarActualitzacio(id) {
   const novaPregunta = document.getElementById('novaPregunta').value;
   const novesRespostes = [];
-  
+
   for (let i = 0; i < 4; i++) {
     novesRespostes.push(document.getElementById(`novaResposta${i}`).value);
   }
@@ -193,43 +193,44 @@ function guardarActualitzacio(id) {
     },
     body: JSON.stringify(actualitzacioData)
   })
-  .then(response => response.json())
-  .then(result => {
-    // Aquí pots gestionar la resposta de la teva API
-    if (result.success) {
-      alert('Pregunta actualitzada amb èxit!');
-      reiniciarJoc(); // Reiniciar el joc després d'actualitzar
-    } else {
-      alert('Error en actualitzar la pregunta: ' + result.message);
-    }
-  });
+    .then(response => response.json())
+    .then(result => {
+      // Aquí pots gestionar la resposta de la teva API
+      if (result.success) {
+        alert('Pregunta actualitzada amb èxit!');
+        reiniciarJoc(); // Reiniciar el joc després d'actualitzar
+      } else {
+        alert('Error en actualitzar la pregunta: ' + result.message);
+      }
+    });
 }
 
 //eliminarPregunta
 function eliminarPregunta(id) {
   if (confirm("Estàs segur que vols eliminar aquesta pregunta?")) {
-    fetch('../back/borrarPregunta.php', {
+    fetch('../back/eliminarPregunta.php', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({ id: id })
     })
-    .then(response => response.json())
-    .then(result => {
-      if (result.success) {
-        alert('Pregunta eliminada amb èxit!');
-        reiniciarJoc(); // Reiniciar el joc després d'eliminar
-      } else {
-        alert('Error en eliminar la pregunta: ' + result.message);
-      }
-    });
+      .then(response => response.json())
+      .then(result => {
+        if (result.success) {
+          alert('Pregunta eliminada amb èxit!');
+          reiniciarJoc(); // Reiniciar el joc després d'eliminar
+        } else {
+          alert('Error en eliminar la pregunta: ' + result.message);
+        }
+      });
   }
 }
 
 //afegirPregunta
 function afegirPregunta() {
   let htmlString = `
+    <button onclick="mostrarPregunta()">Inici</button>
     <h3>Afegir Nova Pregunta</h3>
     <label>Pregunta:</label>
     <input type="text" id="novaPregunta" placeholder="Escriu la pregunta aquí"><br>
@@ -264,20 +265,20 @@ function guardarNovaPregunta() {
   };
 
   // Enviar petició per afegir la nova pregunta
-  fetch('../back/afegirPregunta.php', {
+  fetch('../back/crearPregunta.php', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify(novaPreguntaData)
   })
-  .then(response => response.json())
-  .then(result => {
-    if (result.success) {
-      alert('Pregunta afegida amb èxit!');
-      reiniciarJoc(); // Reiniciar el joc després d'afegir
-    } else {
-      alert('Error en afegir la pregunta: ' + result.message);
-    }
-  });
+    .then(response => response.json())
+    .then(result => {
+      if (result.success) {
+        alert('Pregunta afegida amb èxit!');
+        reiniciarJoc(); // Reiniciar el joc després d'afegir
+      } else {
+        alert('Error en afegir la pregunta: ' + result.message);
+      }
+    });
 }

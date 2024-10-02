@@ -9,8 +9,7 @@
         "Audi",
         "Lexus"
       ],
-      "resposta_correcta": 0,
-      "imatge": "https://exemple.com/bmw.jpg"
+      "resposta_correcta": 0
     },
     {
       "id": 2,
@@ -21,8 +20,7 @@
         "Puma",
         "Reebok"
       ],
-      "resposta_correcta": 0,
-      "imatge": "https://exemple.com/nike.jpg"
+      "resposta_correcta": 0
     },
     {
       "id": 3,
@@ -33,8 +31,7 @@
         "Alfa Romeo",
         "Lamborghini"
       ],
-      "resposta_correcta": 2,
-      "imatge": "https://exemple.com/alfa_romeo.jpg"
+      "resposta_correcta": 2
     },
     {
       "id": 4,
@@ -45,8 +42,7 @@
         "Sony",
         "Microsoft"
       ],
-      "resposta_correcta": 0,
-      "imatge": "https://exemple.com/apple.jpg"
+      "resposta_correcta": 0
     },
     {
       "id": 5,
@@ -57,8 +53,7 @@
         "Maserati",
         "Lamborghini"
       ],
-      "resposta_correcta": 0,
-      "imatge": "https://exemple.com/ferrari.jpg"
+      "resposta_correcta": 0
     },
     {
       "id": 6,
@@ -69,8 +64,7 @@
         "Gucci",
         "Prada"
       ],
-      "resposta_correcta": 0,
-      "imatge": "https://exemple.com/chanel.jpg"
+      "resposta_correcta": 0
     },
     {
       "id": 7,
@@ -81,8 +75,7 @@
         "Alibaba",
         "Walmart"
       ],
-      "resposta_correcta": 0,
-      "imatge": "https://exemple.com/amazon.jpg"
+      "resposta_correcta": 0
     },
     {
       "id": 8,
@@ -93,8 +86,7 @@
         "BMW",
         "Volkswagen"
       ],
-      "resposta_correcta": 0,
-      "imatge": "https://exemple.com/mercedes_benz.jpg"
+      "resposta_correcta": 0
     },
     {
       "id": 9,
@@ -105,8 +97,7 @@
         "Sprite",
         "Fanta"
       ],
-      "resposta_correcta": 1,
-      "imatge": "https://exemple.com/pepsi.jpg"
+      "resposta_correcta": 1
     },
     {
       "id": 10,
@@ -117,8 +108,7 @@
         "Lenovo",
         "Acer"
       ],
-      "resposta_correcta": 1,
-      "imatge": "https://exemple.com/hp.jpg"
+      "resposta_correcta": 1
     },
     {
       "id": 11,
@@ -129,8 +119,7 @@
         "Toyota",
         "Honda"
       ],
-      "resposta_correcta": 0,
-      "imatge": "https://exemple.com/ford.jpg"
+      "resposta_correcta": 0
     },
     {
       "id": 12,
@@ -141,8 +130,7 @@
         "Coca-Cola",
         "Puma"
       ],
-      "resposta_correcta": 1,
-      "imatge": "https://exemple.com/red_cross.jpg"
+      "resposta_correcta": 1
     },
     {
       "id": 13,
@@ -153,8 +141,7 @@
         "Nestlé",
         "Hershey's"
       ],
-      "resposta_correcta": 1,
-      "imatge": "https://exemple.com/lindt.jpg"
+      "resposta_correcta": 1
     },
     {
       "id": 14,
@@ -165,8 +152,7 @@
         "H&M",
         "Gap"
       ],
-      "resposta_correcta": 0,
-      "imatge": "https://exemple.com/levis.jpg"
+      "resposta_correcta": 0
     },
     {
       "id": 15,
@@ -177,8 +163,7 @@
         "Aromatherapy Associates",
         "The Body Shop"
       ],
-      "resposta_correcta": 1,
-      "imatge": "https://exemple.com/young_living.jpg"
+      "resposta_correcta": 1
     },
     {
       "id": 16,
@@ -189,8 +174,7 @@
         "Nokia",
         "Xiaomi"
       ],
-      "resposta_correcta": 0,
-      "imatge": "https://exemple.com/samsung.jpg"
+      "resposta_correcta": 0
     },
     {
       "id": 17,
@@ -201,8 +185,7 @@
         "Rockstar",
         "5-hour Energy"
       ],
-      "resposta_correcta": 0,
-      "imatge": "https://exemple.com/red_bull.jpg"
+      "resposta_correcta": 0
     },
     {
       "id": 18,
@@ -213,8 +196,7 @@
         "Fisher-Price",
         "Playmobil"
       ],
-      "resposta_correcta": 0,
-      "imatge": "https://exemple.com/lego.jpg"
+      "resposta_correcta": 0
     },
     {
       "id": 19,
@@ -225,8 +207,7 @@
         "Costa Coffee",
         "Peet's Coffee"
       ],
-      "resposta_correcta": 0,
-      "imatge": "https://exemple.com/starbucks.jpg"
+      "resposta_correcta": 0
     },
     {
       "id": 20,
@@ -237,8 +218,7 @@
         "Gucci",
         "Yves Saint Laurent"
       ],
-      "resposta_correcta": 3,
-      "imatge": "https://exemple.com/yves_saint_laurent.jpg"
+      "resposta_correcta": 3
     }
   ]
 }

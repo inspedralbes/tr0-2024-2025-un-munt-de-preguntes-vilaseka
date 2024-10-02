@@ -3,7 +3,7 @@
 $servername = "localhost";
 $username = "edu";
 $password = "2024";
-$dbname = "UMDP";
+$dbname = "edu";    
 
 // creem la connexio
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -19,13 +19,14 @@ $sqlDrop = "DROP TABLE IF EXISTS preguntes_existents;";
 
 //missatge de error
 if ($conn->query($sqlDrop) === TRUE) {
-    echo "Taula elimanada si existia.<br>";
+    echo "<br>Taula elimanada si existia.<br>";
 } else {
     echo "Error al elimminar la taula: " . $conn->error . "</br>";
 }
 
 //creacio de taula
-$sqlCreate = " CREATE TABLE `preguntes_existents` (
+// creacio de taula
+$sqlCreate = "CREATE TABLE `preguntes_existents` (
     `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `pregunta` varchar(100) NOT NULL,
     `r1` varchar(30) NOT NULL,
@@ -33,9 +34,8 @@ $sqlCreate = " CREATE TABLE `preguntes_existents` (
     `r3` varchar(30) NOT NULL,
     `r4` varchar(30) NOT NULL,
     `rcorrecte` int(11) NOT NULL
-  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-  COMMIT;
-  ";
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;";
+
 
 //missatge de error
 if ($conn->query($sqlCreate) === TRUE) {
@@ -45,10 +45,12 @@ if ($conn->query($sqlCreate) === TRUE) {
 }
 
 //llegim el fitxer json
-$json = file_get_contents('../back/data.json');
-$json = json_decode($json, true);
+$json = file_get_contents('data.json');
+$data = json_decode($json, true);
 
-//BUCLE PER INSERIR DADES
+
+$stmt = $conn->prepare("INSERT INTO preguntes_existents (id, pregunta, r1, r2, r3, r4, rcorrecte) VALUES (?, ?, ?, ?, ?, ?, ?)");
+
 foreach ($data['preguntes'] as $row) {
     $id = $row['id'];
     $pregunta = $row['pregunta'];
@@ -58,9 +60,17 @@ foreach ($data['preguntes'] as $row) {
     $r4 = $row['respostes'][3];
     $rcorrecte = $row['resposta_correcta'];
 
-    $sql = "INSERT INTO preguntes_existents ('id','pregunta','r1','r2','r3','r4','rcorrecte') 
-    VALUES ('$id','$pregunta','$r1','$r2','$r3','$r4','$rcorrecte');";
+    // Enllaçem les variables a la sentència preparada
+    $stmt->bind_param("isssssi", $id, $pregunta, $r1, $r2, $r3, $r4, $rcorrecte);
+    
+    // Executem la consulta
+    if ($stmt->execute()) {
+        echo "Dades inserides correctament.<br>";
+    } else {
+        echo "Error en inserir dades: " . $stmt->error . "<br>";
+    }
 }
-
+$stmt->close();
 $conn->close();
+
 ?>
