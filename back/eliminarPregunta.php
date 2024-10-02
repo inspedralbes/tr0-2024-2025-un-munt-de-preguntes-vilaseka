@@ -10,34 +10,37 @@ $dbname = "edu";
 // creem la connexio
 $conn = new mysqli($servername, $username, $password, $dbname);
 
-// Check connection
+// Comprovació de la connexió
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-echo "Connected successfully";
 
-// obtenim només la id des del POST
-$id = $_POST['id'] ?? null;
+// Llegir les dades JSON del cos de la petició
+$data = json_decode(file_get_contents("php://input"), true);
 
-// Validar que la id sigui present i sigui un número
-if ($id === null || !is_numeric($id)) {
-    echo json_encode(['success' => false, 'message' => 'ID no vàlid.']);
+// Obtenir l'ID de la pregunta a eliminar
+$id = $data['id'] ?? null;
+
+// Validar que l'ID és vàlid
+if ($id === null) {
+    echo json_encode(['success' => false, 'message' => 'ID de la pregunta és requerit.']);
     exit;
 }
 
-// eliminem la pregunta
+// Preparar la consulta per eliminar la pregunta
 $sql = "DELETE FROM preguntes_existents WHERE id=?";
 $stmt = $conn->prepare($sql);
 
 if ($stmt) {
+    // bind param i executar
     $stmt->bind_param("i", $id);
     $stmt->execute();
 
-    // comprovació 
+    // Comprovació
     if ($stmt->affected_rows > 0) {
         echo json_encode(['success' => true, 'message' => 'Pregunta eliminada.']);
     } else {
-        echo json_encode(['success' => false, 'message' => 'No s\'ha pogut eliminar la pregunta o no existeix.']);
+        echo json_encode(['success' => false, 'message' => 'No s\'ha pogut eliminar la pregunta o ja estava eliminada.']);
     }
 
     $stmt->close();

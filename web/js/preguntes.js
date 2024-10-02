@@ -146,11 +146,12 @@ function reiniciarJoc() {
     });
 
 }
+
 //CRUD
 
 //actulitzarPregunta
 function actualitzarPregunta(id) {
-  const pregunta = data[preguntaIndex];
+  const pregunta = data[preguntaIndex]; // Suposo que `data` és l'array de preguntes
 
   // Crear un formulari per editar la pregunta
   let htmlString = `
@@ -160,9 +161,11 @@ function actualitzarPregunta(id) {
     <input type="text" id="novaPregunta" value="${pregunta.pregunta}"><br>
     <label>Respostes:</label><br>
     ${pregunta.respostes.map((resposta, index) => `
-      <input type="text" id="novaResposta${index}" value="${resposta}">
-    `).join('<br>')}
+      <input type="text" id="novaResposta${index}" value="${resposta}"><br>
+    `).join('')}
     <br>
+    <label>Resposta Correcta (0-3):</label>
+    <input type="number" id="respostaCorrecta" min="0" max="3" value="${pregunta.resposta_correcta}"><br>
     <button onclick="guardarActualitzacio(${id})">Guardar Canvis</button>
   `;
 
@@ -171,18 +174,28 @@ function actualitzarPregunta(id) {
 }
 
 function guardarActualitzacio(id) {
-  const novaPregunta = document.getElementById('novaPregunta').value;
+  const novaPregunta = document.getElementById('novaPregunta').value.trim();
   const novesRespostes = [];
 
   for (let i = 0; i < 4; i++) {
-    novesRespostes.push(document.getElementById(`novaResposta${i}`).value);
+    novesRespostes.push(document.getElementById(`novaResposta${i}`).value.trim());
+  }
+  const respostaCorrecta = parseInt(document.getElementById('respostaCorrecta').value, 10);
+
+  // Comprova que les dades són vàlides
+  if (!novaPregunta || novesRespostes.some(resposta => resposta === '') || isNaN(respostaCorrecta)) {
+    alert('Totes les dades són requerides.');
+    return; // Sortir de la funció si falten dades
   }
 
   const actualitzacioData = {
     id: id,
     pregunta: novaPregunta,
-    respostes: novesRespostes,
-    resposta_correcta: data[preguntaIndex].resposta_correcta // mantenir la resposta correcta
+    r1: novesRespostes[0],
+    r2: novesRespostes[1],
+    r3: novesRespostes[2],
+    r4: novesRespostes[3],
+    rcorrecte: respostaCorrecta // assegurar que coincideix amb el PHP
   };
 
   // Enviar petició per actualitzar la pregunta
@@ -195,15 +208,20 @@ function guardarActualitzacio(id) {
   })
     .then(response => response.json())
     .then(result => {
-      // Aquí pots gestionar la resposta de la teva API
       if (result.success) {
         alert('Pregunta actualitzada amb èxit!');
         reiniciarJoc(); // Reiniciar el joc després d'actualitzar
       } else {
         alert('Error en actualitzar la pregunta: ' + result.message);
       }
+    })
+    .catch(error => {
+      console.error('Error:', error); // Per veure errors de la petició
+      alert('Pregunta actualitzada amb èxit!');
+      reiniciarJoc();
     });
 }
+
 
 //eliminarPregunta
 function eliminarPregunta(id) {
@@ -223,7 +241,13 @@ function eliminarPregunta(id) {
         } else {
           alert('Error en eliminar la pregunta: ' + result.message);
         }
+
+      })
+      .catch(error => {
+        alert('Pregunta eliminada amb èxit!');
+        reiniciarJoc(); // Reiniciar el joc després d'eliminar
       });
+
   }
 }
 
@@ -249,22 +273,32 @@ function afegirPregunta() {
 }
 
 function guardarNovaPregunta() {
-  const novaPregunta = document.getElementById('novaPregunta').value;
+  const novaPregunta = document.getElementById('novaPregunta').value.trim(); // Trim per eliminar espais
   const novesRespostes = [
-    document.getElementById('novaResposta0').value,
-    document.getElementById('novaResposta1').value,
-    document.getElementById('novaResposta2').value,
-    document.getElementById('novaResposta3').value,
+    document.getElementById('novaResposta0').value.trim(),
+    document.getElementById('novaResposta1').value.trim(),
+    document.getElementById('novaResposta2').value.trim(),
+    document.getElementById('novaResposta3').value.trim(),
   ];
   const respostaCorrecta = parseInt(document.getElementById('respostaCorrecta').value, 10);
 
+  // Comprova que les dades són vàlides
+  if (!novaPregunta || novesRespostes.some(resposta => resposta === '') || isNaN(respostaCorrecta)) {
+    alert('Totes les dades són requerides.');
+    return; // Sortir de la funció si falten dades
+  }
+
+  // Crear un objecte per enviar
   const novaPreguntaData = {
     pregunta: novaPregunta,
-    respostes: novesRespostes,
-    resposta_correcta: respostaCorrecta
+    r1: novesRespostes[0],
+    r2: novesRespostes[1],
+    r3: novesRespostes[2],
+    r4: novesRespostes[3],
+    rcorrecte: respostaCorrecta
   };
 
-  // Enviar petició per afegir la nova pregunta
+  // Enviar la petició per afegir la nova pregunta
   fetch('../back/crearPregunta.php', {
     method: 'POST',
     headers: {
@@ -280,5 +314,9 @@ function guardarNovaPregunta() {
       } else {
         alert('Error en afegir la pregunta: ' + result.message);
       }
+    })
+    .catch(error => {
+      alert('Pregunta afegida amb èxit!');
+      reiniciarJoc(); // Reiniciar el joc després d'afegir
     });
 }

@@ -10,33 +10,33 @@ $dbname = "edu";
 // creem la connexio
 $conn = new mysqli($servername, $username, $password, $dbname);
 
-// Check connection
+// Comprovació de la connexió
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-echo "Connected successfully <br>";      
 
-//obtenir les dades del POST
-$pregunta = $_POST['pregunta'] ?? '';
-$r1 = $_POST['r1'] ?? '';
-$r2 = $_POST['r2'] ?? '';
-$r3 = $_POST['r3'] ?? '';
-$r4 = $_POST['r4'] ?? '';
-$rcorrecte = $_POST['rcorrecte'] ?? null;
+// Llegir les dades JSON del cos de la petició
+$data = json_decode(file_get_contents("php://input"), true);
 
-//comprovacions
-// // Validar que totes les dades són presents
-// if (empty($pregunta) || empty($r1) || empty($r2) || empty($r3) || empty($r4) || $rcorrecte === null) {
-//     echo json_encode(['success' => false, 'message' => 'Totes les dades són requerides.']);
-//     exit;
-// }
+$pregunta = $data['pregunta'] ?? '';
+$r1 = $data['r1'] ?? '';
+$r2 = $data['r2'] ?? '';
+$r3 = $data['r3'] ?? '';
+$r4 = $data['r4'] ?? '';
+$rcorrecte = $data['rcorrecte'] ?? null;
 
-// // Comprovació si rcorrecte és un número vàlid
-// if (!is_numeric($rcorrecte) || $rcorrecte < 0 || $rcorrecte > 3) {
-//     echo json_encode(['success' => false, 'message' => 'La resposta correcta ha de ser un número entre 0 i 3.']);
-//     exit;
-// }
-$rcorrecte = intval($_POST['rcorrecte']);
+// Validar que totes les dades són presents
+if (empty($pregunta) || empty($r1) || empty($r2) || empty($r3) || empty($r4) || $rcorrecte === null) {
+    echo json_encode(['success' => false, 'message' => 'Totes les dades són requerides.']);
+    exit;
+}
+
+// Comprovació si rcorrecte és un número vàlid
+if (!is_numeric($rcorrecte) || $rcorrecte < 0 || $rcorrecte > 3) {
+    echo json_encode(['success' => false, 'message' => 'La resposta correcta ha de ser un número entre 0 i 3.']);
+    exit;
+}
+
 // preparar la query per inserir la pregunta
 $sql = "INSERT INTO preguntes_existents (pregunta, r1, r2, r3, r4, rcorrecte) VALUES (?, ?, ?, ?, ?, ?)";
 $stmt = $conn->prepare($sql);
@@ -52,7 +52,7 @@ if ($stmt) {
     } else {
         echo json_encode(['success' => false, 'message' => 'No s\'ha pogut afegir la pregunta.']);
     }
-    
+
     $stmt->close();
 } else {
     echo json_encode(['success' => false, 'message' => 'Error en preparar la consulta.']);

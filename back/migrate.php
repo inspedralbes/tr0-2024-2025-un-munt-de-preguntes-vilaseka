@@ -24,7 +24,6 @@ if ($conn->query($sqlDrop) === TRUE) {
     echo "Error al elimminar la taula: " . $conn->error . "</br>";
 }
 
-//creacio de taula
 // creacio de taula
 $sqlCreate = "CREATE TABLE `preguntes_existents` (
     `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,

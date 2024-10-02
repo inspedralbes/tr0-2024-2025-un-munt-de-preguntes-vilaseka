@@ -10,46 +10,53 @@ $dbname = "edu";
 // creem la connexio
 $conn = new mysqli($servername, $username, $password, $dbname);
 
-// Check connection
+// Comprovació de la connexió
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-echo "Connected successfully";
 
-//obtenir dades per POST
-$id = $_POST['id'] ?? null; // Usar null si 'id' no existeix
-$pregunta = $_POST['pregunta'] ?? '';
-$r1 = $_POST['r1'] ?? '';
-$r2 = $_POST['r2'] ?? '';
-$r3 = $_POST['r3'] ?? '';
-$r4 = $_POST['r4'] ?? '';
-$rcorrecte = $_POST['rcorrecte'] ?? null;
+// Llegir les dades JSON del cos de la petició
+$data = json_decode(file_get_contents("php://input"), true);
 
-// Verificar si id és vàlid
-if ($id === null || !is_numeric($id)) {
-    echo json_encode(['succes' => false, 'message' => 'ID no vàlid']);
+$id = $data['id'] ?? null;
+$pregunta = $data['pregunta'] ?? '';
+$r1 = $data['r1'] ?? '';
+$r2 = $data['r2'] ?? '';
+$r3 = $data['r3'] ?? '';
+$r4 = $data['r4'] ?? '';
+$rcorrecte = $data['rcorrecte'] ?? null;
+
+// Validar que totes les dades són presents
+if ($id === null || empty($pregunta) || empty($r1) || empty($r2) || empty($r3) || empty($r4) || $rcorrecte === null) {
+    echo json_encode(['success' => false, 'message' => 'Totes les dades són requerides.']);
     exit;
 }
 
-//actualitzem la pregunta
+// Comprovació si rcorrecte és un número vàlid
+if (!is_numeric($rcorrecte) || $rcorrecte < 0 || $rcorrecte > 3) {
+    echo json_encode(['success' => false, 'message' => 'La resposta correcta ha de ser un número entre 0 i 3.']);
+    exit;
+}
+
+// preparar la query per actualitzar la pregunta
 $sql = "UPDATE preguntes_existents SET pregunta=?, r1=?, r2=?, r3=?, r4=?, rcorrecte=? WHERE id=?";
 $stmt = $conn->prepare($sql);
 
 if ($stmt) {
-    // Bind params i executar
+    // bind params i executar
     $stmt->bind_param("ssssssi", $pregunta, $r1, $r2, $r3, $r4, $rcorrecte, $id);
     $stmt->execute();
 
-    // Comprovació
+    // comprovació
     if ($stmt->affected_rows > 0) {
-        echo json_encode(['succes' => true, 'message' => 'Pregunta actualitzada!']);
+        echo json_encode(['success' => true, 'message' => 'Pregunta actualitzada!']);
     } else {
-        echo json_encode(['succes' => false, 'message' => 'No s\'ha actualitzat cap pregunta o la informació és la mateixa.']);
+        echo json_encode(['success' => false, 'message' => 'No s\'ha pogut actualitzar la pregunta.']);
     }
 
     $stmt->close();
 } else {
-    echo json_encode(['succes' => false, 'message' => 'Error en preparar la consulta']);
+    echo json_encode(['success' => false, 'message' => 'Error en preparar la consulta.']);
 }
 
 $conn->close();
