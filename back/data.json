@@ -143,6 +143,102 @@
       ],
       "resposta_correcta": 1,
       "imatge": "https://exemple.com/red_cross.jpg"
-    }    
+    },
+    {
+      "id": 13,
+      "pregunta": "Quina marca de xocolata utilitza el lema 'A little piece of heaven'?",
+      "respostes": [
+        "Cadbury",
+        "Lindt",
+        "Nestlé",
+        "Hershey's"
+      ],
+      "resposta_correcta": 1,
+      "imatge": "https://exemple.com/lindt.jpg"
+    },
+    {
+      "id": 14,
+      "pregunta": "Quina marca de roba utilitza un logotip amb una etiqueta vermella?",
+      "respostes": [
+        "Levi's",
+        "Zara",
+        "H&M",
+        "Gap"
+      ],
+      "resposta_correcta": 0,
+      "imatge": "https://exemple.com/levis.jpg"
+    },
+    {
+      "id": 15,
+      "pregunta": "Quina marca d'olis essencials utilitza un logotip amb una flor?",
+      "respostes": [
+        "Doterra",
+        "Young Living",
+        "Aromatherapy Associates",
+        "The Body Shop"
+      ],
+      "resposta_correcta": 1,
+      "imatge": "https://exemple.com/young_living.jpg"
+    },
+    {
+      "id": 16,
+      "pregunta": "Quina marca de telefonia mòbil és coneguda pel seu sistema operatiu Android?",
+      "respostes": [
+        "Samsung",
+        "Apple",
+        "Nokia",
+        "Xiaomi"
+      ],
+      "resposta_correcta": 0,
+      "imatge": "https://exemple.com/samsung.jpg"
+    },
+    {
+      "id": 17,
+      "pregunta": "Quina marca de begudes energètiques és coneguda pel seu logotip amb un tauró?",
+      "respostes": [
+        "Red Bull",
+        "Monster",
+        "Rockstar",
+        "5-hour Energy"
+      ],
+      "resposta_correcta": 0,
+      "imatge": "https://exemple.com/red_bull.jpg"
+    },
+    {
+      "id": 18,
+      "pregunta": "Quina marca de joguines és coneguda pel seu logotip amb una estrella de cinc puntes?",
+      "respostes": [
+        "LEGO",
+        "Mattel",
+        "Fisher-Price",
+        "Playmobil"
+      ],
+      "resposta_correcta": 0,
+      "imatge": "https://exemple.com/lego.jpg"
+    },
+    {
+      "id": 19,
+      "pregunta": "Quina marca de cafè és famosa per les seves begudes de cafè personalitzades?",
+      "respostes": [
+        "Starbucks",
+        "Dunkin'",
+        "Costa Coffee",
+        "Peet's Coffee"
+      ],
+      "resposta_correcta": 0,
+      "imatge": "https://exemple.com/starbucks.jpg"
+    },
+    {
+      "id": 20,
+      "pregunta": "Quina marca de perfumes utilitza un logotip amb una flor de lis?",
+      "respostes": [
+        "Chanel",
+        "Dior",
+        "Gucci",
+        "Yves Saint Laurent"
+      ],
+      "resposta_correcta": 3,
+      "imatge": "https://exemple.com/yves_saint_laurent.jpg"
+    }
   ]
 }

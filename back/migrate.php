@@ -26,7 +26,7 @@ if ($conn->query($sqlDrop) === TRUE) {
 
 //creacio de taula
 $sqlCreate = " CREATE TABLE `preguntes_existents` (
-    `id` int(11) NOT NULL,
+    `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `pregunta` varchar(100) NOT NULL,
     `r1` varchar(30) NOT NULL,
     `r2` varchar(30) NOT NULL,

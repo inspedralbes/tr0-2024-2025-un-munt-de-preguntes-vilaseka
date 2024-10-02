@@ -4,7 +4,7 @@ fetch('../back/getPreguntes.php?num=10')
   .then(response => response.json())
   .then(dades => {
     data = dades;
-    //console.log(data);
+   //console.log(data);
     mostrarPregunta();
   });
 
@@ -54,13 +54,18 @@ function mostrarPregunta() {
 
   if (preguntaIndex < estatDeLaPartida.preguntes.length) {
     let htmlString = ''; // variable per construir el HTML
-    htmlString += `<h2>${data[0][estatDeLaPartida.contadorPreguntes].pregunta}</h2>`; // afegir la pregunta
+    htmlString += `<h2>${data[estatDeLaPartida.contadorPreguntes].pregunta}</h2>`; // afegir la pregunta
     
     // iterem sobre les respostes
-    for (let j = 0; j < data[0][preguntaIndex].respostes.length; j++) {
-      htmlString += `<button class="resposta-button" data-index="${j}">${opcions[j]}</button> ${data[0][preguntaIndex].respostes[j]}<br>`;
+    for (let j = 0; j < data[preguntaIndex].respostes.length; j++) {
+      htmlString += `<button class="resposta-button" data-index="${j}">${opcions[j]}</button> ${data[preguntaIndex].respostes[j]}<br>`;
     }
 
+
+    htmlString += `<button onclick="actualitzarPregunta(${data[preguntaIndex].id})">Modificar Pregunta</button>`;
+    htmlString += `<button onclick="eliminarPregunta(${data[preguntaIndex].id})">Eliminar Pregunta</button>`;
+
+    
     partidaDiv.innerHTML = htmlString; // injectar el HTML
     partidaDiv.innerHTML += `<p>Puntuació actual: ${puntuacio}/10</p>`; // mostrar la puntuació
 
@@ -68,7 +73,7 @@ function mostrarPregunta() {
     const buttons = partidaDiv.querySelectorAll('.resposta-button');
     buttons.forEach(button => {
       button.addEventListener('click', (event) => {
-        const index = event.target.getAttribute('data-index');
+        const index = parseInt(event.target.getAttribute('data-index'),10);
         gestionarResposta(index);
       });
     });
@@ -77,13 +82,18 @@ function mostrarPregunta() {
   }
 }
 
+function actualitzarPregunta(id){
+  const pregunta = data[0][preguntaIndex];
+  
+}
+
 function gestionarResposta(respostaUsuari) {
   // guarda l'hora d'inici
   if (iniciTemps === null) {
     iniciTemps = Date.now(); // guardem el temps en mil·lisegons
   }
 
-  const respostaCorrecta = data[0][preguntaIndex].resposta_correcta; // obtenir la resposta correcta
+  const respostaCorrecta = parseInt(data[preguntaIndex].resposta_correcta,10) ; // obtenir la resposta correcta
   const correcioDiv = document.getElementById('correcio'); // espai per correcció
 
   // comprovar si la resposta és correcta
