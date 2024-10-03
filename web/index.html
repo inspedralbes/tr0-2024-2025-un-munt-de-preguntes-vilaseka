@@ -24,22 +24,8 @@
     <div id="marcador" style="display: none;"></div>
     <div id="pregunta" style="display: none;"></div>
 
-    <script src="js/preguntes.js"></script>
-    <script>
-        document.getElementById('començarJoc').onclick = function () {            
-            const nomJugador = document.getElementById('nomJugador').value;
-            if (nomJugador) {
-                //amaga la pantalla de inici
-                document.getElementById('inici').style.display = 'none';
-                document.getElementById('partida').style.display = 'block';
-                document.getElementById('correcio').style.display = 'block';
-                document.getElementById('marcador').style.display = 'block';
-                document.getElementById('pregunta').style.display = 'block';
-            } else {
-                alert('Si us plau, introdueix el teu nom.');
-            }
-        };
-    </script>
+    <script src="js/preguntes.js"></script> 
+    <script src="js/crud.js"></script>
 </body>
 
 </html>
