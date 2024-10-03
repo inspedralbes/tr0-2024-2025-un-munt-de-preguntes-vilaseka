@@ -1,206 +1,72 @@
+let data = [];
 
-let data;
-fetch('../back/getPreguntes.php?num=10')
-    .then(response => response.json())
-    .then(dades => {
-        data = dades;
-        //console.log(data);
-        mostrarPregunta();
-    });
+// Funció per mostrar el llistat de preguntes
+function mostrarPreguntes() {
+    const adminDiv = document.getElementById('admin');
+    adminDiv.innerHTML = ''; // Reiniciar el div
 
-let iniciTemps = null; // variable per guardar l'hora d'inici des del primer clic
-let opcions = ['A', 'B', 'C', 'D']; // opcions per a les respostes
-let puntuacio = 0; // variable per comptar respostes correctes
-let preguntaIndex = 0; // índex de la pregunta actual
-let totalTemps = 0; // temps total de la partida
-let correctes = 0;
-let incorrectes = 0;
-let estatDeLaPartida = {
-    contadorPreguntes: 0,
-    preguntes: [
-        { id: 1, feta: false, resposta: 0 },
-        { id: 2, feta: false, resposta: 0 },
-        { id: 3, feta: false, resposta: 0 },
-        { id: 4, feta: false, resposta: 0 },
-        { id: 5, feta: false, resposta: 0 },
-        { id: 6, feta: false, resposta: 0 },
-        { id: 7, feta: false, resposta: 0 },
-        { id: 8, feta: false, resposta: 0 },
-        { id: 9, feta: false, resposta: 0 },
-        { id: 10, feta: false, resposta: 0 }
-    ]
-};
+    if (data.length > 0) {
+        let htmlString = '<h2>Llistat de Preguntes</h2>';
+        htmlString += '<table style="border-collapse: collapse; width: 100%;">';
+        htmlString += `
+            <thead>
+                <tr>
+                    <th style="border: 1px solid #ccc; padding: 8px;">Pregunta</th>
+                    <th style="border: 1px solid #ccc; padding: 8px;">Respostes</th>
+                    <th style="border: 1px solid #ccc; padding: 8px;">Accions</th>
+                </tr>
+            </thead>
+            <tbody>
+        `;
 
-function actualitzarMarcador() {
-    let htmlString = '';
-    htmlString = `<h2>${estatDeLaPartida.contadorPreguntes}/10</h2>`;
-    htmlString += `<table>`;
-
-    for (let index = 0; index < estatDeLaPartida.preguntes.length; index++) {
-        htmlString += `<tr><td> - Pregunta ${index + 1}</td><td>`;
-        if (estatDeLaPartida.preguntes[index].feta) {
-            htmlString += "Feta";
-        } else {
-            htmlString += "Pendent";
-        }
-        htmlString += `</td></tr>`;
-    }
-    htmlString += `</table>`;
-    document.getElementById("marcador").innerHTML = htmlString;
-}
-
-function mostrarPregunta() {
-    const partidaDiv = document.getElementById('partida');
-    partidaDiv.innerHTML = '';
-
-    if (preguntaIndex < estatDeLaPartida.preguntes.length) {
-        let htmlString = ''; // variable per construir el HTML
-        htmlString += `<h2>${data[estatDeLaPartida.contadorPreguntes].pregunta}</h2>`; // afegir la pregunta
-        // iterem sobre les respostes
-        for (let j = 0; j < data[preguntaIndex].respostes.length; j++) {
-            htmlString += `<button class="resposta-button" data-index="${j}">${opcions[j]}</button> ${data[preguntaIndex].respostes[j]}<br>`;
-        }
-        partidaDiv.innerHTML = htmlString; // injectar el HTML
-        //event listeners
-        const buttons = partidaDiv.querySelectorAll('.resposta-button');
-        buttons.forEach(button => {
-            button.addEventListener('click', (event) => {
-                const index = parseInt(event.target.getAttribute('data-index'));
-                gestionarResposta(index);
-            });
-        });
-    } else {
-        mostrarResultats();
-    }
-}
-
-function gestionarResposta(respostaUsuari) {
-    // Comprovar si és la primera vegada que s'inicia el temporitzador
-    if (iniciTemps === null) {
-        iniciTemps = Date.now(); // Guardem el temps en mil·lisegons
-    }
-    // Obtenir la resposta correcta
-    const respostaCorrecta = parseInt(data[preguntaIndex].resposta_correcta, 10); // Garantir que és un número
-    const correcioDiv = document.getElementById('correcio'); // Espai per a mostrar la correcció
-
-    // Comprovar si la resposta és correcta
-    if (respostaUsuari === respostaCorrecta) {
-        puntuacio++; // Incrementar la puntuació total
-        correctes++; // Incrementar el comptador de respostes correctes
-        correcioDiv.innerHTML = 'Correcte!'; // Mostrar que la resposta és correcta
-    } else {
-        incorrectes++; // Incrementar el comptador de respostes incorrectes
-        correcioDiv.innerHTML = 'Incorrecte!'; // Mostrar que la resposta és incorrecta
-    }
-    // Actualitzar l'estat de la partida
-    estatDeLaPartida.preguntes[preguntaIndex].feta = true; // Marcar la pregunta com a feta
-    estatDeLaPartida.contadorPreguntes++; // Incrementar el comptador de preguntes fetes
-    estatDeLaPartida.preguntes[preguntaIndex].resposta = respostaUsuari; // Guardar la resposta de l'usuari
-
-    // Actualitzar el marcador (puntuació, respostes correctes, incorrectes)
-    actualitzarMarcador();
-
-    // Incrementar l'índex de la pregunta
-    preguntaIndex++;
-
-    // Comprovar si hi ha més preguntes disponibles
-    if (preguntaIndex < data.preguntes.length) {
-        setTimeout(mostrarPregunta, 500); // Mostrar la següent pregunta després d'un petit retard
-    } else {
-        mostrarResultats(); // Si no hi ha més preguntes, mostrar els resultats finals
-    }
-}
-
-function gestionarResposta(respostaUsuari) {
-    // guarda l'hora d'inici
-    if (iniciTemps === null) {
-        iniciTemps = Date.now(); // guardem el temps en mil·lisegons
-    }
-
-    // Obtenim la resposta correcta
-    const respostaCorrecta = parseInt(data[preguntaIndex].resposta_correcta); // garantir que és un número
-    const correcioDiv = document.getElementById('correcio'); // espai per correcció
-
-    // comprovar si la resposta és correcta
-    if (respostaUsuari === respostaCorrecta) {
-        puntuacio++;
-        correctes++;
-        correcioDiv.innerHTML = 'Correcte!'; // Mostrar la correcció
-    } else {
-        incorrectes++;
-        correcioDiv.innerHTML = 'Incorrecte!'; // Mostrar la correcció
-    }
-
-    //actualitzem l'estat de la partida
-    estatDeLaPartida.preguntes[preguntaIndex].feta = true;
-    estatDeLaPartida.contadorPreguntes++;
-    estatDeLaPartida.preguntes[preguntaIndex].resposta = respostaUsuari;
-    actualitzarMarcador();
-    preguntaIndex++; // incrementar l'índex de la pregunta
-    setTimeout(mostrarPregunta, 500);
-}
-
-// funció per mostrar els resultats i temps
-function mostrarResultats() {
-    const fiTemps = Date.now(); // agafem el temps actual en acabar el joc
-    totalTemps = Math.floor((fiTemps - iniciTemps) / 1000); // temps transcorregut en segons
-
-    const partidaDiv = document.getElementById('partida');
-    partidaDiv.innerHTML = `<h2>El teu resultat final és: ${puntuacio} de 10</h2>`;
-    partidaDiv.innerHTML += `<p>Correctes: ${correctes}</p>`; // Mostrar respostes correctes
-    partidaDiv.innerHTML += `<p>Incorrectes: ${incorrectes}</p>`; // Mostrar respostes incorrectes
-    partidaDiv.innerHTML += `<p>Temps total: ${totalTemps} segons.</p>`;
-    partidaDiv.innerHTML += `<p>Vols tornar a jugar?</p>`;
-    // botó per reiniciar partida
-    partidaDiv.innerHTML += `<button onclick="reiniciarJoc()">Sí</button>`;
-}
-
-
-// funció per reiniciar el joc
-function reiniciarJoc() {
-    puntuacio = 0;
-    preguntaIndex = 0;
-    iniciTemps = null; // reiniciar l'hora d'inici
-    estatDeLaPartida.contadorPreguntes = 0;
-    correctes = 0;
-    incorrectes = 0;
-
-    for (let i = 0; i < estatDeLaPartida.preguntes.length; i++) {
-        estatDeLaPartida.preguntes[i].feta = false;
-        estatDeLaPartida.preguntes[i].resposta = 0;
-    }
-    fetch('../back/getPreguntes.php?num=10') // tornar a carregar les dades
-        .then(response => response.json())
-        .then(dades => {
-            data = dades; // assignar les preguntes a la variable global
-            mostrarPregunta(); // reiniciar el joc
+        data.forEach((pregunta) => {
+            htmlString += `
+                <tr>
+                    <td style="border: 1px solid #ccc; padding: 8px;">${pregunta.pregunta}</td>
+                    <td style="border: 1px solid #ccc; padding: 8px;">
+                        1. ${pregunta.respostes[0]} <br>
+                        2. ${pregunta.respostes[1]} <br>
+                        3. ${pregunta.respostes[2]} <br>
+                        4. ${pregunta.respostes[3]}
+                    </td>
+                    <td style="border: 1px solid #ccc; padding: 8px;">
+                        <button onclick="editarPregunta(${pregunta.id})">Editar</button>
+                        <button onclick="eliminarPregunta(${pregunta.id})">Eliminar</button>
+                    </td>
+                </tr>
+            `;
         });
 
+        htmlString += `
+            </tbody>
+            </table>
+        `;
+        adminDiv.innerHTML = htmlString; // Injectar el HTML
+    } else {
+        adminDiv.innerHTML = '<p>No hi ha preguntes disponibles.</p>'; // Mensaje si no hay preguntas
+    }
 }
 
-//CRUD
-//actulitzarPregunta
-function actualitzarPregunta(id) {
-    const pregunta = data[preguntaIndex]; // Suposo que `data` és l'array de preguntes
+// Funció per editar preguntes
+function editarPregunta(id) {
+    const preguntaIndex = data.findIndex(p => p.id === id);
+    const pregunta = data[preguntaIndex];
 
     // Crear un formulari per editar la pregunta
     let htmlString = `
-      <button onclick="mostrarPregunta()">Inici</button>
-      <h3>Modificar Pregunta</h3>
-      <label>Pregunta:</label>
-      <input type="text" id="novaPregunta" value="${pregunta.pregunta}"><br>
-      <label>Respostes:</label><br>
-      ${pregunta.respostes.map((resposta, index) => `
-        <input type="text" id="novaResposta${index}" value="${resposta}"><br>
-      `).join('')}
-      <br>
-      <label>Resposta Correcta (0-3):</label>
-      <input type="number" id="respostaCorrecta" min="0" max="3" value="${pregunta.resposta_correcta}"><br>
-      <button onclick="guardarActualitzacio(${id})">Guardar Canvis</button>
+        <h3>Editar Pregunta</h3>
+        <input type="text" id="novaPregunta" value="${pregunta.pregunta}"><br>
+        <label>Respostes:</label><br>
+        ${pregunta.respostes.map((resposta, index) => `
+            <input type="text" id="novaResposta${index}" value="${resposta}"><br>
+        `).join('')}
+        <br>
+        <label>Resposta Correcta (0-3):</label>
+        <input type="number" id="respostaCorrecta" min="0" max="3" value="${pregunta.resposta_correcta}"><br>
+        <button onclick="guardarActualitzacio(${id})">Guardar Canvis</button>
+        <button onclick="mostrarPreguntes()">Cancel·lar</button>
     `;
-
-    const partidaDiv = document.getElementById('partida');
-    partidaDiv.innerHTML = htmlString; // Mostrar formulari per modificar
+    document.getElementById('admin').innerHTML = htmlString; // Mostrar el formulari d'edició
 }
 
 function guardarActualitzacio(id) {
@@ -221,11 +87,8 @@ function guardarActualitzacio(id) {
     const actualitzacioData = {
         id: id,
         pregunta: novaPregunta,
-        r1: novesRespostes[0],
-        r2: novesRespostes[1],
-        r3: novesRespostes[2],
-        r4: novesRespostes[3],
-        rcorrecte: respostaCorrecta // assegurar que coincideix amb el PHP
+        respostes: novesRespostes,
+        resposta_correcta: respostaCorrecta
     };
 
     // Enviar petició per actualitzar la pregunta
@@ -234,120 +97,58 @@ function guardarActualitzacio(id) {
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(actualitzacioData)
+        body: JSON.stringify(actualitzacioData) // Convertir l'objecte a JSON
     })
+    .then(response => response.json())
+    .then(result => {
+        if (result.success) {
+            alert('Pregunta actualitzada amb èxit!');
+            carregarPreguntes(); // Tornar a carregar les preguntes
+        } else {
+            alert('Error en actualitzar la pregunta: ' + result.message);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error); // Gestionar errors
+        alert('Error en actualitzar la pregunta');
+    });
+}
+
+// Funció per eliminar preguntes
+function eliminarPregunta(id) {
+    const confirmacion = confirm("Estàs segur que vols eliminar aquesta pregunta?");
+    if (confirmacion) {
+        fetch(`../back/eliminarPregunta.php?id=${id}`, {
+            method: 'DELETE'
+        })
         .then(response => response.json())
         .then(result => {
             if (result.success) {
-                alert('Pregunta actualitzada amb èxit!');
-                reiniciarJoc(); // Reiniciar el joc després d'actualitzar
+                alert('Pregunta eliminada amb èxit!');
+                carregarPreguntes(); // Tornar a carregar les preguntes
             } else {
-                alert('Error en actualitzar la pregunta: ' + result.message);
+                alert('Error en eliminar la pregunta: ' + result.message);
             }
         })
         .catch(error => {
-            console.error('Error:', error); // Per veure errors de la petició
-            alert('Pregunta actualitzada amb èxit!');
-            reiniciarJoc();
+            console.error('Error:', error); // Gestionar errors
+            alert('Error en eliminar la pregunta');
         });
-}
-
-
-//eliminarPregunta
-function eliminarPregunta(id) {
-    if (confirm("Estàs segur que vols eliminar aquesta pregunta?")) {
-        fetch('../back/eliminarPregunta.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ id: id })
-        })
-            .then(response => response.json())
-            .then(result => {
-                if (result.success) {
-                    alert('Pregunta eliminada amb èxit!');
-                    reiniciarJoc(); // Reiniciar el joc després d'eliminar
-                } else {
-                    alert('Error en eliminar la pregunta: ' + result.message);
-                }
-
-            })
-            .catch(error => {
-                alert('Pregunta eliminada amb èxit!');
-                reiniciarJoc(); // Reiniciar el joc després d'eliminar
-            });
-
     }
 }
 
-//afegirPregunta
-function afegirPregunta() {
-    let htmlString = `
-      <button onclick="mostrarPregunta()">Inici</button>
-      <h3>Afegir Nova Pregunta</h3>
-      <label>Pregunta:</label>
-      <input type="text" id="novaPregunta" placeholder="Escriu la pregunta aquí"><br>
-      <label>Respostes:</label><br>
-      <input type="text" id="novaResposta0" placeholder="Resposta A"><br>
-      <input type="text" id="novaResposta1" placeholder="Resposta B"><br>
-      <input type="text" id="novaResposta2" placeholder="Resposta C"><br>
-      <input type="text" id="novaResposta3" placeholder="Resposta D"><br>
-      <label>Resposta Correcta (0-3):</label>
-      <input type="number" id="respostaCorrecta" min="0" max="3"><br>
-      <button onclick="guardarNovaPregunta()">Guardar Pregunta</button>
-    `;
-
-    const partidaDiv = document.getElementById('partida');
-    partidaDiv.innerHTML = htmlString; // Mostrar formulari per afegir nova pregunta
-}
-
-function guardarNovaPregunta() {
-    const novaPregunta = document.getElementById('novaPregunta').value.trim(); // Trim per eliminar espais
-    const novesRespostes = [
-        document.getElementById('novaResposta0').value.trim(),
-        document.getElementById('novaResposta1').value.trim(),
-        document.getElementById('novaResposta2').value.trim(),
-        document.getElementById('novaResposta3').value.trim(),
-    ];
-    const respostaCorrecta = parseInt(document.getElementById('respostaCorrecta').value, 10);
-
-    // comprovació de que les dades són vàlides
-    if (!novaPregunta || novesRespostes.some(resposta => resposta === '') || isNaN(respostaCorrecta)) {
-        alert('Totes les dades són requerides.');
-        return; // Sortir de la funció si falten dades
-    }
-
-    //crear l'objecte per enviar
-    const novaPreguntaData = {
-        pregunta: novaPregunta,
-        r1: novesRespostes[0],
-        r2: novesRespostes[1],
-        r3: novesRespostes[2],
-        r4: novesRespostes[3],
-        rcorrecte: respostaCorrecta
-    };
-
-    //enviar petició per afegir la pregunta  ala BD
-    fetch('../back/crearPregunta.php', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(novaPreguntaData)
-    })
+// Funció per carregar i mostrar preguntes al iniciar
+function carregarPreguntes() {
+    fetch('../back/getPreguntes.php?num=20')
         .then(response => response.json())
-        .then(result => {
-            if (result.success) {
-                alert('Pregunta afegida amb èxit!');
-                reiniciarJoc(); // reiniciar el joc
-            } else {
-                alert('Error en afegir la pregunta: ' + result.message);
-            }
+        .then(dades => {
+            data = dades; // Asegúrate de acceder a la estructura correcta del JSON
+            mostrarPreguntes(); // Mostrar la lista de preguntes
         })
-        .catch(error => {//si que fa la petició.
-            alert('Pregunta afegida amb èxit!');
-            reiniciarJoc(); // Reiniciar el joc després d'afegir
+        .catch(error => {
+            console.error('Error:', error); // Gestionar errors
         });
 }
 
+// Cargar preguntas al iniciar
+document.addEventListener('DOMContentLoaded', carregarPreguntes);

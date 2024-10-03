@@ -1,12 +1,13 @@
 let data;
-
+document.getElementById('crud').addEventListener('click',function(){
+  window.location.href = 'index1.html';
+});
 document.getElementById('començarJoc').addEventListener('click', () => {
     const nomJugador = document.getElementById('nomJugador').value.trim();
     if (nomJugador === "") {
         alert("Si us plau, introdueix el teu nom.");
         return;
     }
-
     document.getElementById('inici').style.display = 'none'; // Ocultar la secció d'inici
     document.getElementById('partida').style.display = 'block'; // Mostrar la secció de partida
     fetchPreguntes(); // Iniciar el procés de fetch per les preguntes
@@ -64,7 +65,7 @@ function actualitzarMarcador() {
 function mostrarPregunta() {
   const partidaDiv = document.getElementById('partida');
   partidaDiv.innerHTML = '';
-
+  
   if (preguntaIndex < estatDeLaPartida.preguntes.length) {
     let htmlString = ''; // variable per construir el HTML
     htmlString += `<h2>${data[estatDeLaPartida.contadorPreguntes].pregunta}</h2>`; // afegir la pregunta
