@@ -5,11 +5,11 @@ $input = file_get_contents('php://input');
 $usuariRespostes = json_decode($input, true);
 
 //llegir rl fitxer 
-$jsonData = file_get_contents('../back/data.json');
+$jsonData = file_get_contents('data.json');
 $preguntes = json_decode($jsonData, true)['preguntes'];
 
 // les variables per comptar preguntes totals i respostes correctes
-$totalPreguntes = count($preguntes);
+$totalPreguntes = 10;
 $respostesCorrectes = 0;    
 
 // comprovar les respostes de l'usuari amb les correctes

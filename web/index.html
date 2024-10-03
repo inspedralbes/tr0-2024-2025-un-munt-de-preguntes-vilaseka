@@ -6,15 +6,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UMDP-EDUARD VILASECA VILÀ</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
 </head>
 
 <body>
     <h1>TR0 UMDP <br>- Un Munt De Preguntes -</h1>
-    <div id="partida"></div>
-    <div id="correcio"></div>
-    <div id="marcador"></div>
-    <div id="pregunta"></div>
+    <div id="inici">
+        <center>
+            <label for="nomJugador">Com vols dir-te?</label>
+            <input type="text" id="nomJugador" placeholder="Introdueix el teu nom" required>
+            <button id="començarJoc">Començar a jugar</button>
+        </center>
+    </div>
+
+    <div id="partida" style="display: none;"></div>
+    <div id="correcio" style="display: none;"></div>
+    <div id="marcador" style="display: none;"></div>
+    <div id="pregunta" style="display: none;"></div>
+
     <script src="js/preguntes.js"></script>
+    <script>
+        document.getElementById('començarJoc').onclick = function () {            
+            const nomJugador = document.getElementById('nomJugador').value;
+            if (nomJugador) {
+                //amaga la pantalla de inici
+                document.getElementById('inici').style.display = 'none';
+                document.getElementById('partida').style.display = 'block';
+                document.getElementById('correcio').style.display = 'block';
+                document.getElementById('marcador').style.display = 'block';
+                document.getElementById('pregunta').style.display = 'block';
+            } else {
+                alert('Si us plau, introdueix el teu nom.');
+            }
+        };
+    </script>
 </body>
 
 </html>

@@ -13,6 +13,8 @@ let opcions = ['A', 'B', 'C', 'D']; // opcions per a les respostes
 let puntuacio = 0; // variable per comptar respostes correctes
 let preguntaIndex = 0; // índex de la pregunta actual
 let totalTemps = 0; // temps total de la partida
+let correctes = 0;
+let incorrectes = 0;
 let estatDeLaPartida = {
   contadorPreguntes: 0,
   preguntes: [
@@ -36,7 +38,6 @@ function actualitzarMarcador() {
 
   for (let index = 0; index < estatDeLaPartida.preguntes.length; index++) {
     htmlString += `<tr><td> - Pregunta ${index + 1}</td><td>`;
-
     if (estatDeLaPartida.preguntes[index].feta) {
       htmlString += "Feta";
     } else {
@@ -61,19 +62,17 @@ function mostrarPregunta() {
       htmlString += `<button class="resposta-button" data-index="${j}">${opcions[j]}</button> ${data[preguntaIndex].respostes[j]}<br>`;
     }
 
-
     htmlString += `<button onclick="actualitzarPregunta(${data[preguntaIndex].id})">Modificar Pregunta</button>`;
     htmlString += `<button onclick="eliminarPregunta(${data[preguntaIndex].id})">Eliminar Pregunta</button>`;
     htmlString += `<button onclick="afegirPregunta(${data[preguntaIndex].id})">Afegir Pregunta</button>`;
 
     partidaDiv.innerHTML = htmlString; // injectar el HTML
-    partidaDiv.innerHTML += `<p>Puntuació actual: ${puntuacio}/10</p>`; // mostrar la puntuació
 
     //event listeners
     const buttons = partidaDiv.querySelectorAll('.resposta-button');
     buttons.forEach(button => {
       button.addEventListener('click', (event) => {
-        const index = parseInt(event.target.getAttribute('data-index'), 10);
+        const index = parseInt(event.target.getAttribute('data-index'));
         gestionarResposta(index);
       });
     });
@@ -88,27 +87,26 @@ function gestionarResposta(respostaUsuari) {
     iniciTemps = Date.now(); // guardem el temps en mil·lisegons
   }
 
-  const respostaCorrecta = parseInt(data[preguntaIndex].resposta_correcta, 10); // obtenir la resposta correcta
+  // Obtenim la resposta correcta
+  const respostaCorrecta = parseInt(data[preguntaIndex].resposta_correcta); // garantir que és un número
   const correcioDiv = document.getElementById('correcio'); // espai per correcció
 
   // comprovar si la resposta és correcta
   if (respostaUsuari === respostaCorrecta) {
     puntuacio++;
-    correcioDiv.innerHTML = 'Correcte!'; // mostrar missatge de correcte
+    correctes++;
+    correcioDiv.innerHTML = 'Correcte!'; // Mostrar la correcció
   } else {
-    correcioDiv.innerHTML = 'Incorrecte!'; // mostrar missatge de incorrecte
+    incorrectes++;
+    correcioDiv.innerHTML = 'Incorrecte!'; // Mostrar la correcció
   }
 
-  // Actualitzem l'estat de la partida
+  //actualitzem l'estat de la partida
   estatDeLaPartida.preguntes[preguntaIndex].feta = true;
   estatDeLaPartida.contadorPreguntes++;
   estatDeLaPartida.preguntes[preguntaIndex].resposta = respostaUsuari;
-
   actualitzarMarcador();
-
   preguntaIndex++; // incrementar l'índex de la pregunta
-
-  // Mostrar la següent pregunta després de 1 segon
   setTimeout(mostrarPregunta, 500);
 }
 
@@ -119,13 +117,14 @@ function mostrarResultats() {
 
   const partidaDiv = document.getElementById('partida');
   partidaDiv.innerHTML = `<h2>El teu resultat final és: ${puntuacio} de 10</h2>`;
-  partidaDiv.innerHTML += `<p>Temps total: ${totalTemps} segons</p>`;
-  partidaDiv.innerHTML += `Vols tornar a jugar? <p>`;
-  // botó per reiniciar
-  partidaDiv.innerHTML += `<p> <button onclick="reiniciarJoc()">Sí</button>`;
-
-  document.getElementById('reiniciar-joc').addEventListener('click', reiniciarJoc);
+  partidaDiv.innerHTML += `<p>Correctes: ${correctes}</p>`; // Mostrar respostes correctes
+  partidaDiv.innerHTML += `<p>Incorrectes: ${incorrectes}</p>`; // Mostrar respostes incorrectes
+  partidaDiv.innerHTML += `<p>Temps total: ${totalTemps} segons.</p>`;
+  partidaDiv.innerHTML += `<p>Vols tornar a jugar?</p>`;
+  // botó per reiniciar partida
+  partidaDiv.innerHTML += `<p><button onclick="reiniciarJoc()">Sí</button></p>`;
 }
+
 
 // funció per reiniciar el joc
 function reiniciarJoc() {
@@ -133,6 +132,8 @@ function reiniciarJoc() {
   preguntaIndex = 0;
   iniciTemps = null; // reiniciar l'hora d'inici
   estatDeLaPartida.contadorPreguntes = 0;
+  correctes = 0;
+  incorrectes = 0;
 
   for (let i = 0; i < estatDeLaPartida.preguntes.length; i++) {
     estatDeLaPartida.preguntes[i].feta = false;
@@ -148,7 +149,6 @@ function reiniciarJoc() {
 }
 
 //CRUD
-
 //actulitzarPregunta
 function actualitzarPregunta(id) {
   const pregunta = data[preguntaIndex]; // Suposo que `data` és l'array de preguntes
@@ -282,13 +282,13 @@ function guardarNovaPregunta() {
   ];
   const respostaCorrecta = parseInt(document.getElementById('respostaCorrecta').value, 10);
 
-  // Comprova que les dades són vàlides
+  // comprovació de que les dades són vàlides
   if (!novaPregunta || novesRespostes.some(resposta => resposta === '') || isNaN(respostaCorrecta)) {
     alert('Totes les dades són requerides.');
     return; // Sortir de la funció si falten dades
   }
 
-  // Crear un objecte per enviar
+  //crear l'objecte per enviar
   const novaPreguntaData = {
     pregunta: novaPregunta,
     r1: novesRespostes[0],
@@ -298,7 +298,7 @@ function guardarNovaPregunta() {
     rcorrecte: respostaCorrecta
   };
 
-  // Enviar la petició per afegir la nova pregunta
+  //enviar petició per afegir la pregunta  ala BD
   fetch('../back/crearPregunta.php', {
     method: 'POST',
     headers: {
@@ -310,13 +310,14 @@ function guardarNovaPregunta() {
     .then(result => {
       if (result.success) {
         alert('Pregunta afegida amb èxit!');
-        reiniciarJoc(); // Reiniciar el joc després d'afegir
+        reiniciarJoc(); // reiniciar el joc
       } else {
         alert('Error en afegir la pregunta: ' + result.message);
       }
     })
-    .catch(error => {
+    .catch(error => {//si que fa la petició.
       alert('Pregunta afegida amb èxit!');
       reiniciarJoc(); // Reiniciar el joc després d'afegir
     });
 }
+
