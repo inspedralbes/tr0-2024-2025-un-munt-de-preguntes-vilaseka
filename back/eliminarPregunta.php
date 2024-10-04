@@ -1,53 +1,51 @@
 <?php
-include 'migrate.php';
-
-// Establecer conexión con la base de datos
+// Configuració de la base de dades
 $servername = "localhost";
 $username = "edu";
 $password = "2024";
 $dbname = "edu";
 
-// Crear la conexión
+// Crear la connexió amb la base de dades
 $conn = new mysqli($servername, $username, $password, $dbname);
 
-// Comprobación de la conexión
+// Comprovar la connexió
 if ($conn->connect_error) {
-    echo json_encode(['success' => false, 'message' => 'Error de conexión: ' . $conn->connect_error]);
+    echo json_encode(['success' => false, 'message' => 'Error de connexió: ' . $conn->connect_error]);
     exit;
 }
 
-// Leer datos
-$data = json_decode(file_get_contents("php://input"), true);
+// Obtenir l'ID de la pregunta des de la URL (GET)
+$id = $_GET['id'] ?? null;
 
-// Obtener el ID de la pregunta a eliminar
-$id = $data['id'] ?? null;
-
-// Validar que el ID es válido
-if ($id === null || !is_numeric($id)) {
-    echo json_encode(['success' => false, 'message' => 'El ID de la pregunta es requerido y debe ser un número.']);
+// Validar que s'hagi proporcionat un ID
+if ($id === null) {
+    echo json_encode(['success' => false, 'message' => 'No s\'ha proporcionat cap ID.']);
     exit;
 }
 
-// Preparar la consulta para eliminar la pregunta
-$sql = "DELETE FROM preguntes_existents WHERE id=?";
+// Preparar la consulta SQL per eliminar la pregunta
+$sql = "DELETE FROM preguntes_existents WHERE id = ?";
 $stmt = $conn->prepare($sql);
 
 if ($stmt) {
-    // Bind param y ejecutar
+    // Assignar l'ID a la consulta preparada
     $stmt->bind_param("i", $id);
     $stmt->execute();
 
-    // Comprobación
+    // Comprovar si l'eliminació ha estat exitosa
     if ($stmt->affected_rows > 0) {
-        echo json_encode(['success' => true, 'message' => 'Pregunta eliminada con éxito.']);
+        echo json_encode(['success' => true, 'message' => 'Pregunta eliminada amb èxit.']);
     } else {
-        echo json_encode(['success' => false, 'message' => 'No se pudo eliminar la pregunta, o ya estaba eliminada.']);
+        echo json_encode(['success' => false, 'message' => 'No s\'ha trobat la pregunta amb aquest ID.']);
     }
 
+    // Tancar la consulta preparada
     $stmt->close();
 } else {
-    echo json_encode(['success' => false, 'message' => 'Error al preparar la consulta.']);
+    // En cas d'error en preparar la consulta
+    echo json_encode(['success' => false, 'message' => 'Error en preparar la consulta.']);
 }
 
+// Tancar la connexió
 $conn->close();
 ?>

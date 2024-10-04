@@ -3,7 +3,7 @@
 $servername = "localhost";
 $username = "edu";
 $password = "2024";
-$dbname = "edu";    
+$dbname = "edu";
 
 // creem la connexio
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -12,16 +12,16 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-echo "Connected successfully";
+
 
 //aqui elimino la taula si existeix
 $sqlDrop = "DROP TABLE IF EXISTS preguntes_existents;";
 
 //missatge de error
 if ($conn->query($sqlDrop) === TRUE) {
-    echo "<br>Taula elimanada si existia.<br>";
+    // echo "<br>Taula elimanada si existia.<br>";
 } else {
-    echo "Error al elimminar la taula: " . $conn->error . "</br>";
+    // echo "Error al elimminar la taula: " . $conn->error . "</br>";
 }
 
 // creacio de taula
@@ -38,9 +38,9 @@ $sqlCreate = "CREATE TABLE `preguntes_existents` (
 
 //missatge de error
 if ($conn->query($sqlCreate) === TRUE) {
-    echo "Taula creada correctament. <br>";
+    // echo "Taula creada correctament. <br>";
 } else {
-    echo "Error al crear la taula " . $conn->error . "</br>";
+    //echo "Error al crear la taula " . $conn->error . "</br>";
 }
 
 //llegim el fitxer json
@@ -61,12 +61,12 @@ foreach ($data['preguntes'] as $row) {
 
     // Enllaçem les variables a la sentència preparada
     $stmt->bind_param("isssssi", $id, $pregunta, $r1, $r2, $r3, $r4, $rcorrecte);
-    
+
     // Executem la consulta
     if ($stmt->execute()) {
-        echo "Dades inserides correctament.<br>";
+        // echo "Dades inserides correctament.<br>";
     } else {
-        echo "Error en inserir dades: " . $stmt->error . "<br>";
+        //echo "Error en inserir dades: " . $stmt->error . "<br>";
     }
 }
 $stmt->close();

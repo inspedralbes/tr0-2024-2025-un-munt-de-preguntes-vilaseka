@@ -10,7 +10,7 @@ $preguntes = json_decode($jsonData, true)['preguntes'];
 
 // les variables per comptar preguntes totals i respostes correctes
 $totalPreguntes = 10;
-$respostesCorrectes = 0;    
+$respostesCorrectes = 0;
 
 // comprovar les respostes de l'usuari amb les correctes
 for ($i = 0; $i < $totalPreguntes; $i++) {
