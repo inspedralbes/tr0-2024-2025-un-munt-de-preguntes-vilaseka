@@ -1,9 +1,9 @@
 <?php
 // Configuració de la base de dades
 $servername = "localhost";
-$username = "edu";
-$password = "2024";
-$dbname = "edu";
+$username = "a23eduvilvil_BDPROJECTE1";
+$password = "1035papA.";
+$dbname = "a23eduvilvil_BDPROJECTE1";
 
 // Crear la connexió amb la base de dades
 $conn = new mysqli($servername, $username, $password, $dbname);
