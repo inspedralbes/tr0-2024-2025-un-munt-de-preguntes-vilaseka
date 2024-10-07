@@ -17,7 +17,7 @@ if (isset($_GET['num'])) {
     $num = $_GET['num'];
 
     // Prepara la consulta SQL
-    $sql = "SELECT * FROM preguntes_existents ORDER BY RAND() LIMIT ?";
+    $sql = "SELECT id, pregunta,r1,r2,r3,r4 FROM preguntes_existents ORDER BY RAND() LIMIT ?";
     $stmt = $conn->prepare($sql);
 
     // Víncula el parámetro
@@ -32,7 +32,8 @@ if (isset($_GET['num'])) {
 
     // Elimina el campo 'rcorrecte' de cada pregunta
     // foreach ($preguntesSeleccionades as &$pregunta) {
-    //     unset($pregunta['rcorrecte']);  // Elimina la respuesta correcta
+    //     // var_dump($pregunta['rcorrecte']);
+    //    unset($pregunta['rcorrecte']);  // Elimina la respuesta correcta
     // }
 
     // Retorna las preguntas seleccionadas en formato JSON
@@ -55,9 +56,9 @@ else {
     $preguntesSeleccionades = $result->fetch_all(MYSQLI_ASSOC); // Obtiene todas las filas como un array asociativo
 
     // Elimina el campo 'rcorrecte' de cada pregunta
-    foreach ($preguntesSeleccionades as &$pregunta) {
-        unset($pregunta['rcorrecte']);  // Elimina la respuesta correcta
-    }
+    // foreach ($preguntesSeleccionades as &$pregunta) {
+    //     unset($pregunta['rcorrecte']);  // Elimina la respuesta correcta
+    // }
 
     // Retorna las preguntas seleccionadas en formato JSON
     echo json_encode($preguntesSeleccionades);
