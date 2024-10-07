@@ -1,12 +1,37 @@
 <!DOCTYPE html>
-<html lang="ca">
+<html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>UMDP-EDUARD VILASECA VILÀ</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
 </head>
+
 <body>
-    
+    <h1>TR0 UMDP <br>- Un Munt De Preguntes -</h1>
+    <div id="inici">
+        <center>
+            <h3>
+                <label for="nomJugador">Com vols dir-te?</label>
+                <input type="text" id="nomJugador" placeholder="Introdueix el teu nom" required>
+            </h3>
+            <p></p>
+            <button id="començarJoc">Començar a jugar</button>
+            <button id="crud">CRUD</button>
+
+        </center>
+    </div>
+
+    <div id="partida" style="display: none;"></div>
+    <div id="correcio" style="display: none;"></div>
+    <div id="marcador" style="display: none;"></div>
+    <div id="pregunta" style="display: none;"></div>
+    <script src="js/preguntes.js"></script>
+    <script src="js/crud.js"></script>
 </body>
+
 </html>

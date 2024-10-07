@@ -1,0 +1,120 @@
+/* Global Styles */
+body {
+    font-family: 'Roboto', sans-serif; /* Font moderna */
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #f4f4f4 0%, #eaeaea 100%); /* Fons amb gradient */
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centrem el contingut */
+    justify-content: center;
+    min-height: 100vh; /* Assegura que ocupa tot l'alçada */
+}
+
+/* Main Title */
+h1 {
+    text-align: center;
+    margin: 20px 0;
+    font-size: 2.5em; /* Més gran */
+    color: #2980b9; /* Color blau */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Ombra de text */
+}
+
+/* Style for the game section */
+#partida {
+    background: white; /* Fons blanc */
+    border: 1px solid #ddd; /* Bordes suaus */
+    border-radius: 12px; /* Arrodonim les cantonades */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Ombra lleugera */
+    padding: 30px; /* Espai interior */
+    margin: 20px auto; /* Margin automàtic per centrar */
+    max-width: 600px; /* Amplada màxima */
+    transition: transform 0.3s; /* Animació suau per a l'efecte */
+}
+
+/* Hover effect for the game section */
+#partida:hover {
+    transform: translateY(-2px); /* Lleugera elevació al passar el ratolí */
+}
+
+/* Style for the scoreboard */
+#marcador {
+    text-align: center;
+    margin: 20px auto;
+    max-width: 600px;
+    font-size: 1.2em; /* Més gran */
+}
+
+/* Style for feedback */
+#correcio {
+    text-align: center;
+    margin: 10px auto;
+    max-width: 600px;
+    font-weight: bold;
+    color: #27ae60; /* Verd per correcció */
+}
+
+/* Button styles */
+button {
+    background-color: #3498db; /* Color de fons */
+    color: white; /* Color del text */
+    border: none; /* Sense bordes */
+    border-radius: 8px; /* Arrodonim les cantonades */
+    padding: 12px 20px; /* Espai interior */
+    cursor: pointer; /* Canviem el cursor al passar per sobre */
+    margin: 8px; /* Espai entre botons */
+    font-size: 1em; /* Mida del text */
+    transition: background-color 0.3s, transform 0.2s; /* Animació per al color de fons i transformació */
+}
+
+/* Effect on hover for buttons */
+button:hover {
+    background-color: #2980b9; /* Color més fosc al passar per sobre */
+    transform: translateY(-2px); /* Lleugera elevació */
+}
+
+/* Final result style */
+h2 {
+    text-align: center;
+    color: #2c3e50; /* Color del text */
+    margin-top: 20px;
+}
+
+/* Style for paragraphs */
+p {
+    text-align: center;
+    font-size: 1.1em; /* Mida del text */
+}
+
+/* Style for results table */
+table {
+    width: 100%;
+    border-collapse: collapse; /* Fusionem els bordes */
+    margin-top: 20px;
+}
+
+td {
+    padding: 12px; /* Espai interior de les cel·les */
+    border: 1px solid #ddd; /* Bordes suaus */
+    text-align: center; /* Centrem el text */
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9; /* Color alternat per a les files */
+}
+
+/* Responsive Styles */
+@media (max-width: 600px) {
+    h1 {
+        font-size: 2em; /* Reduïm la mida del títol per pantalles petites */
+    }
+
+    button {
+        width: 100%; /* Botons ocupen tot l'ample en pantalles petites */
+    }
+
+    #partida, #marcador, #correcio {
+        padding: 20px; /* Menys espai interior per a pantalles petites */
+    }
+}

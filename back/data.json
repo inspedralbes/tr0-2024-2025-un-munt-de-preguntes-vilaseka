@@ -1,0 +1,224 @@
+{
+  "preguntes": [
+    {
+      "id": 1,
+      "pregunta": "Quina marca de cotxes utilitza el lema 'Ultimate Driving Machine'?",
+      "respostes": [
+        "BMW",
+        "Mercedes-Benz",
+        "Audi",
+        "Lexus"
+      ],
+      "resposta_correcta": 0
+    },
+    {
+      "id": 2,
+      "pregunta": "Quina marca utilitza el lema 'Just Do It'?",
+      "respostes": [
+        "Nike",
+        "Adidas",
+        "Puma",
+        "Reebok"
+      ],
+      "resposta_correcta": 0
+    },
+    {
+      "id": 3,
+      "pregunta": "Quina marca és coneguda pel seu logotip amb una serp que engoleix la seva pròpia cua?",
+      "respostes": [
+        "Mercedes-Benz",
+        "Ferrari",
+        "Alfa Romeo",
+        "Lamborghini"
+      ],
+      "resposta_correcta": 2
+    },
+    {
+      "id": 4,
+      "pregunta": "Quina marca de tecnologia utilitza un logotip amb una poma mossegada?",
+      "respostes": [
+        "Apple",
+        "Samsung",
+        "Sony",
+        "Microsoft"
+      ],
+      "resposta_correcta": 0
+    },
+    {
+      "id": 5,
+      "pregunta": "Quina marca de cotxes és coneguda pel seu logotip amb un cavall rampant?",
+      "respostes": [
+        "Ferrari",
+        "Porsche",
+        "Maserati",
+        "Lamborghini"
+      ],
+      "resposta_correcta": 0
+    },
+    {
+      "id": 6,
+      "pregunta": "Quina marca de luxe utilitza un logotip amb un doble C entrellaçat?",
+      "respostes": [
+        "Chanel",
+        "Louis Vuitton",
+        "Gucci",
+        "Prada"
+      ],
+      "resposta_correcta": 0
+    },
+    {
+      "id": 7,
+      "pregunta": "Quina marca utilitza un logotip amb una fletxa que apunta cap a la dreta?",
+      "respostes": [
+        "Amazon",
+        "eBay",
+        "Alibaba",
+        "Walmart"
+      ],
+      "resposta_correcta": 0
+    },
+    {
+      "id": 8,
+      "pregunta": "Quina marca de cotxes és coneguda pel seu logotip amb una estrella de tres puntes?",
+      "respostes": [
+        "Mercedes-Benz",
+        "Audi",
+        "BMW",
+        "Volkswagen"
+      ],
+      "resposta_correcta": 0
+    },
+    {
+      "id": 9,
+      "pregunta": "Quina marca de begudes utilitza un logotip amb una ona?",
+      "respostes": [
+        "Coca-Cola",
+        "Pepsi",
+        "Sprite",
+        "Fanta"
+      ],
+      "resposta_correcta": 1
+    },
+    {
+      "id": 10,
+      "pregunta": "Quina marca d'ordinadors portàtils utilitza un logotip amb una campana?",
+      "respostes": [
+        "Dell",
+        "HP",
+        "Lenovo",
+        "Acer"
+      ],
+      "resposta_correcta": 1
+    },
+    {
+      "id": 11,
+      "pregunta": "Quina marca d'automòbils utilitza un logotip amb un oval?",
+      "respostes": [
+        "Ford",
+        "Chevrolet",
+        "Toyota",
+        "Honda"
+      ],
+      "resposta_correcta": 0
+    },
+    {
+      "id": 12,
+      "pregunta": "Quina marca utilitza un logotip amb una creu blanca sobre un fons vermell?",
+      "respostes": [
+        "Swiss Air",
+        "Red Cross",
+        "Coca-Cola",
+        "Puma"
+      ],
+      "resposta_correcta": 1
+    },
+    {
+      "id": 13,
+      "pregunta": "Quina marca de xocolata utilitza el lema 'A little piece of heaven'?",
+      "respostes": [
+        "Cadbury",
+        "Lindt",
+        "Nestlé",
+        "Hershey's"
+      ],
+      "resposta_correcta": 1
+    },
+    {
+      "id": 14,
+      "pregunta": "Quina marca de roba utilitza un logotip amb una etiqueta vermella?",
+      "respostes": [
+        "Levi's",
+        "Zara",
+        "H&M",
+        "Gap"
+      ],
+      "resposta_correcta": 0
+    },
+    {
+      "id": 15,
+      "pregunta": "Quina marca d'olis essencials utilitza un logotip amb una flor?",
+      "respostes": [
+        "Doterra",
+        "Young Living",
+        "Aromatherapy Associates",
+        "The Body Shop"
+      ],
+      "resposta_correcta": 1
+    },
+    {
+      "id": 16,
+      "pregunta": "Quina marca de telefonia mòbil és coneguda pel seu sistema operatiu Android?",
+      "respostes": [
+        "Samsung",
+        "Apple",
+        "Nokia",
+        "Xiaomi"
+      ],
+      "resposta_correcta": 0
+    },
+    {
+      "id": 17,
+      "pregunta": "Quina marca de begudes energètiques és coneguda pel seu logotip amb un tauró?",
+      "respostes": [
+        "Red Bull",
+        "Monster",
+        "Rockstar",
+        "5-hour Energy"
+      ],
+      "resposta_correcta": 0
+    },
+    {
+      "id": 18,
+      "pregunta": "Quina marca de joguines és coneguda pel seu logotip amb una estrella de cinc puntes?",
+      "respostes": [
+        "LEGO",
+        "Mattel",
+        "Fisher-Price",
+        "Playmobil"
+      ],
+      "resposta_correcta": 0
+    },
+    {
+      "id": 19,
+      "pregunta": "Quina marca de cafè és famosa per les seves begudes de cafè personalitzades?",
+      "respostes": [
+        "Starbucks",
+        "Dunkin'",
+        "Costa Coffee",
+        "Peet's Coffee"
+      ],
+      "resposta_correcta": 0
+    },
+    {
+      "id": 20,
+      "pregunta": "Quina marca de perfumes utilitza un logotip amb una flor de lis?",
+      "respostes": [
+        "Chanel",
+        "Dior",
+        "Gucci",
+        "Yves Saint Laurent"
+      ],
+      "resposta_correcta": 3
+    }
+  ]
+}
